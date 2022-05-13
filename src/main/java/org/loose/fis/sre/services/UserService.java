@@ -24,9 +24,16 @@ public class UserService {
         userRepository = database.getRepository(User.class);
     }
 
-    public static void addUser(String username, String password, String role) throws UsernameAlreadyExistsException {
+    public static int addUser(String LastName, String FirstName, String phone, String address, String username, String password, String role) throws UsernameAlreadyExistsException, NoEmptyField {
         checkUserDoesNotAlreadyExist(username);
-        userRepository.insert(new User(username, encodePassword(username, password), role));
+        if(LastName.equals("") || FirstName.equals("") || phone.equals("") || address.equals("") || username.equals("") || password.equals("") || role.equals("")) throw new NoEmptyField();
+
+        userRepository.insert(new User(LastName, FirstName, phone, address, username, encodePassword(username, password), role));
+
+        if(role.equals("Pacient"))return 1;
+        else if(role.equals("Medic"))return 2;
+
+        return 0;
     }
 
     private static void checkUserDoesNotAlreadyExist(String username) throws UsernameAlreadyExistsException {
@@ -60,6 +67,7 @@ public class UserService {
     //method that checks credentials in Log In
     public static int checkCredentials(String username, String password) throws WrongUsernameException, WrongPasswordException, EmptyUsernameFieldException, EmptyPasswordFieldException, EmptyUsernamePasswordFieldException{
         int v_username = 0, v_password = 0; // initial the username and password does not exist in the database
+        String encryptedPassword = encodePassword(username, password);
 
         if(username.equals("") && password.equals("")) throw new EmptyUsernamePasswordFieldException();
         else if(username.equals("")) throw new EmptyUsernameFieldException();
@@ -69,7 +77,7 @@ public class UserService {
         {
             if(Objects.equals(username, user.getUsername())){
                 v_username = 1; //username exists
-                if(Objects.equals(password, user.getPassword())){
+                if(Objects.equals(encryptedPassword, user.getPassword())){
                     v_password = 1; // password exists
 
                     if (user.getRole().equals("Pacient")) return 1;
