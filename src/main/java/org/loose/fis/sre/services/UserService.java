@@ -67,6 +67,7 @@ public class UserService {
     //method that checks credentials in Log In
     public static int checkCredentials(String username, String password) throws WrongUsernameException, WrongPasswordException, EmptyUsernameFieldException, EmptyPasswordFieldException, EmptyUsernamePasswordFieldException{
         int v_username = 0, v_password = 0; // initial the username and password does not exist in the database
+        String encryptedPassword = encodePassword(username, password);
 
         if(username.equals("") && password.equals("")) throw new EmptyUsernamePasswordFieldException();
         else if(username.equals("")) throw new EmptyUsernameFieldException();
@@ -76,7 +77,7 @@ public class UserService {
         {
             if(Objects.equals(username, user.getUsername())){
                 v_username = 1; //username exists
-                if(Objects.equals(password, user.getPassword())){
+                if(Objects.equals(encryptedPassword, user.getPassword())){
                     v_password = 1; // password exists
 
                     if (user.getRole().equals("Pacient")) return 1;

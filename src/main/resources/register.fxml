@@ -78,11 +78,6 @@
                </font>
             </PasswordField>
             <Line endX="156.0" layoutX="122.0" layoutY="345.0" startX="-91.0" stroke="CORNFLOWERBLUE" AnchorPane.leftAnchor="30.5" AnchorPane.rightAnchor="120.5" AnchorPane.topAnchor="344.5" />
-            <Label layoutX="41.0" layoutY="366.0" text="Role" textFill="#a1a1a1ed" AnchorPane.leftAnchor="41.0" AnchorPane.topAnchor="366.0">
-               <font>
-                  <Font name="Calibri" size="20.0" />
-               </font>
-            </Label>
             <ChoiceBox fx:id="ChoiceBox" layoutX="29.0" layoutY="360.0" prefHeight="35.0" prefWidth="250.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="119.0" AnchorPane.topAnchor="360.0" />
             <Line endX="156.0" layoutX="122.0" layoutY="395.0" startX="-91.0" stroke="CORNFLOWERBLUE" AnchorPane.leftAnchor="30.5" AnchorPane.rightAnchor="120.5" AnchorPane.topAnchor="394.5" />
             <Button fx:id="Register" layoutX="29.0" layoutY="451.0" mnemonicParsing="false" onAction="#createAccount" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: #6495ED;" text="Register" textFill="WHITE" AnchorPane.leftAnchor="29.0">
@@ -90,12 +85,12 @@
                   <Font name="Ebrima Bold" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="Back" layoutX="325.0" layoutY="19.0" mnemonicParsing="false" onAction="#goBack" prefHeight="34.0" prefWidth="38.0" style="-fx-background-color: transparent;" />
-            <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="325.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="330.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Images/icons8-logout-rounded-left-48.png" />
                </image>
             </ImageView>
+            <Button fx:id="Back" layoutX="329.0" layoutY="20.0" mnemonicParsing="false" onAction="#goBack" prefHeight="33.0" prefWidth="41.0" style="-fx-background-color: transparent; -fx-text-fill: transparent;" text="Button" />
             <Label fx:id="emptyField" layoutX="29.0" layoutY="404.0" prefHeight="35.0" prefWidth="301.0" />
          </children>
       </AnchorPane>
