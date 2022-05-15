@@ -42,6 +42,7 @@ public class Medicamentation {
 
         Medicamentation user = (Medicamentation) o;
 
+        if (username != null ? !username.equals(user.username) : user.username != null) return false;
         if (medicamentation != null ? !medicamentation.equals(user.medicamentation) : user.medicamentation != null) return false;
         if (dosage != null ? !dosage.equals(user.dosage) : user.dosage != null) return false;
         if (endDate != null ? !endDate.equals(user.endDate) : user.endDate != null) return false;

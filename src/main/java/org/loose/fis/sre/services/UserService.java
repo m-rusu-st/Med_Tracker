@@ -16,7 +16,6 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import static org.loose.fis.sre.services.FileSystemService.getPathToFile;
-
 import static org.loose.fis.sre.services.FileSystemService.getPathToFile2;
 
 public class UserService {
@@ -123,8 +122,19 @@ public class UserService {
         for(User user : userRepository.find())
         {
             if(Objects.equals("Pacient", user.getRole())){
-                list.add(user.getLastName() + " " + user.getFirstName());
+                list.add(user.getUsername());
             }
+        }
+
+        x.setItems(list);
+    }
+
+    public static void populateChoiceBox2(ChoiceBox x, String username){
+        ObservableList<String> list = FXCollections.observableArrayList();
+        for(Medicamentation user : userRepository2.find())
+        {
+            if(Objects.equals(username, user.getUsername()))
+                list.add(user.getUsername() +" " + user.getMedicamentation() + " " + user.getDosage() + " " + user.getEndDate());
         }
 
         x.setItems(list);

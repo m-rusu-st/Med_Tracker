@@ -6,24 +6,20 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
-//import org.dizitart.no2.NitriteCollection;
 import org.loose.fis.sre.exceptions.*;
-import org.loose.fis.sre.model.User;
 import org.loose.fis.sre.services.UserService;
+
 import java.io.IOException;
-import java.util.Objects;
 
-
-public class PrescribeMedsController {
+public class ModifyMedsController {
     @FXML
     private ChoiceBox<String> patientsList;
     @FXML
-    private TextField addMedicineField;
+    private ChoiceBox<String> medsChoiceBox;
     @FXML
-    private TextField dosageField;
+    private TextField dosageTextField;
     @FXML
     private DatePicker datePicker;
     @FXML
@@ -33,8 +29,7 @@ public class PrescribeMedsController {
     @FXML
     private Button saveButton;
     @FXML
-    private Label wrongField;
-
+    private Button DeleteButton;
 
     private Stage stage;
     private Parent root;
@@ -43,19 +38,18 @@ public class PrescribeMedsController {
     public void initialize()
     {
         UserService.populateChoiceBox(patientsList);
+        //UserService.populateChoiceBox2(medsChoiceBox,(String) patientsList.getValue());
         treatmentChoiceBox.getItems().addAll("Da!", "Nu!");
 
     }
 
-    public void doctorSavesChanges(ActionEvent event) throws IOException
+    public void doctorDeletesMed(ActionEvent e) throws IOException
     {
-        try{
 
-            UserService.addMedicamentation((String) patientsList.getValue(), addMedicineField.getText(), dosageField.getText(), datePicker.getValue(), (String)treatmentChoiceBox.getValue());
+    }
 
-        }catch(EmptyFieldsDoctorException e){
-            wrongField.setText(e.getMessage());
-        }
+    public void doctorSavesChanges(ActionEvent e) throws IOException
+    {
 
     }
 
