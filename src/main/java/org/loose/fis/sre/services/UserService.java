@@ -7,17 +7,22 @@ import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.loose.fis.sre.exceptions.*;
 import org.loose.fis.sre.model.User;
+import org.loose.fis.sre.model.Medicamentation;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
 import java.util.Objects;
 
 import static org.loose.fis.sre.services.FileSystemService.getPathToFile;
 
+import static org.loose.fis.sre.services.FileSystemService.getPathToFile2;
+
 public class UserService {
 
     private static ObjectRepository<User> userRepository;
+    private static ObjectRepository<Medicamentation> userRepository2;
 
     public static void initDatabase() {
         Nitrite database = Nitrite.builder()
@@ -25,6 +30,14 @@ public class UserService {
                 .openOrCreate("test", "test");
 
         userRepository = database.getRepository(User.class);
+    }
+
+    public static void initDatabase2() {
+        Nitrite database = Nitrite.builder()
+                .filePath(getPathToFile2("MedTracker2.db").toFile())
+                .openOrCreate("test", "test");
+
+        userRepository2 = database.getRepository(Medicamentation.class);
     }
 
     public static int addUser(String LastName, String FirstName, String phone, String address, String username, String password, String role) throws UsernameAlreadyExistsException, NoEmptyField {
@@ -38,6 +51,13 @@ public class UserService {
 
         return 0;
     }
+
+    public static int addMedicamentation(String username, String medicamentation, String dosage, LocalDate date, String treatmentComplete){
+        userRepository2.insert(new Medicamentation(username, medicamentation, dosage, date, treatmentComplete));
+
+        return 0;
+    }
+
 
     private static void checkUserDoesNotAlreadyExist(String username) throws UsernameAlreadyExistsException {
         for (User user : userRepository.find()) {

@@ -46,6 +46,7 @@ public class PrescribeMedsController {
 
     public void doctorSavesChanges(ActionEvent event) throws IOException
     {
+        UserService.addMedicamentation((String) patientsList.getValue(), addMedicineField.getText(), dosageField.getText(), datePicker.getValue(), (String)treatmentChoiceBox.getValue());
 
     }
 
