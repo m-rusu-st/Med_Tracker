@@ -32,6 +32,8 @@ public class PrescribeMedsController {
     private Button BackButton;
     @FXML
     private Button saveButton;
+    @FXML
+    private Label wrongField;
 
     private Stage stage;
     private Parent root;
@@ -46,7 +48,13 @@ public class PrescribeMedsController {
 
     public void doctorSavesChanges(ActionEvent event) throws IOException
     {
-        UserService.addMedicamentation((String) patientsList.getValue(), addMedicineField.getText(), dosageField.getText(), datePicker.getValue(), (String)treatmentChoiceBox.getValue());
+        try{
+
+            UserService.addMedicamentation((String) patientsList.getValue(), addMedicineField.getText(), dosageField.getText(), datePicker.getValue(), (String)treatmentChoiceBox.getValue());
+
+        }catch(EmptyFieldsDoctorException e){
+            wrongField.setText(e.getMessage());
+        }
 
     }
 

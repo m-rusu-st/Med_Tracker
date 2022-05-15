@@ -52,7 +52,9 @@ public class UserService {
         return 0;
     }
 
-    public static int addMedicamentation(String username, String medicamentation, String dosage, LocalDate date, String treatmentComplete){
+    public static int addMedicamentation(String username, String medicamentation, String dosage, LocalDate date, String treatmentComplete) throws EmptyFieldsDoctorException {
+
+        if(medicamentation.equals("") || dosage.equals("") || date.equals("") || treatmentComplete.equals(""))throw new EmptyFieldsDoctorException();
         userRepository2.insert(new Medicamentation(username, medicamentation, dosage, date, treatmentComplete));
 
         return 0;

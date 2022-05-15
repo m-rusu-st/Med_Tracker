@@ -31,10 +31,22 @@ public class Medicamentation {
 
     public String getDosage(){return dosage;}
 
-    public String getDate(){return medicamentation;}
-
     public LocalDate getEndDate(){return endDate;}
 
     public String getTreatmentComplete(){return treatmentComplete;}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Medicamentation user = (Medicamentation) o;
+
+        if (medicamentation != null ? !medicamentation.equals(user.medicamentation) : user.medicamentation != null) return false;
+        if (dosage != null ? !dosage.equals(user.dosage) : user.dosage != null) return false;
+        if (endDate != null ? !endDate.equals(user.endDate) : user.endDate != null) return false;
+        return  (treatmentComplete != null ? !treatmentComplete.equals(user.treatmentComplete) : user.treatmentComplete != null) ;
+    }
+
 }
 

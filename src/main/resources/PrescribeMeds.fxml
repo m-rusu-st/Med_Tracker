@@ -63,7 +63,7 @@
                     </image>
                 </ImageView>
                 <Button fx:id="BackButton" layoutX="295.0" layoutY="476.0" mnemonicParsing="false" onAction="#userGoesToPreviousPageButton" prefHeight="36.0" prefWidth="38.0" style="-fx-background-color: transparent; -fx-text-fill: transparent;" text="Button" />
-                <Button fx:id="saveButton" layoutX="247.0" layoutY="394.0" mnemonicParsing="false" onAction="#doctorSavesChanges" style="-fx-background-color: #6495ed;" text="Save!">
+                <Button fx:id="saveButton" layoutX="247.0" layoutY="394.0" mnemonicParsing="false" onAction="#doctorSavesChanges" style="-fx-background-color: #6495ed;" text="Save!" textFill="WHITE">
                     <font>
                         <Font name="Ebrima" size="15.0" />
                     </font>
@@ -76,6 +76,11 @@
                 <ChoiceBox fx:id="treatmentChoiceBox" layoutX="-39.0" layoutY="324.0" prefHeight="34.0" prefWidth="274.0" style="-fx-background-color: transparent; -fx-font-size: 18;" AnchorPane.leftAnchor="-39.0" />
                 <Line endX="167.0" layoutX="-205.0" layoutY="358.0" startX="434.5" stroke="CORNFLOWERBLUE" AnchorPane.leftAnchor="-38.5" />
                 <DatePicker fx:id="datePicker" layoutX="-40.0" layoutY="234.0" prefHeight="34.0" prefWidth="271.0" promptText="Discard after" style="-fx-background-color: transparent; -fx-font-size: 18;" />
+            <Label fx:id="wrongField" layoutX="22.0" layoutY="378.0" prefHeight="128.0" prefWidth="201.0">
+               <font>
+                  <Font name="Ebrima" size="18.0" />
+               </font>
+            </Label>
             </children>
         </AnchorPane>
     </right>

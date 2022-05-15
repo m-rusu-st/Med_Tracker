@@ -43,34 +43,32 @@
     <right>
         <AnchorPane prefHeight="519.0" prefWidth="338.0" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="manageAppointmentsButton" layoutX="18.0" layoutY="32.0" mnemonicParsing="false" onAction="#doctorManageAppointments" prefHeight="58.0" prefWidth="272.0" style="-fx-background-color: #6495ED;" text="Manage appointments" AnchorPane.bottomAnchor="429.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="23.0">
+                <Button fx:id="manageAppointmentsButton" layoutX="18.0" layoutY="32.0" mnemonicParsing="false" onAction="#doctorManageAppointments" prefHeight="58.0" prefWidth="272.0" style="-fx-background-color: #6495ED;" text="Manage appointments" textFill="WHITE" AnchorPane.bottomAnchor="429.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="23.0">
                     <font>
                         <Font name="Ebrima" size="21.0" />
                     </font>
                 </Button>
-                <Button fx:id="prescribeMedsButton" layoutX="21.0" layoutY="152.0" mnemonicParsing="false" onAction="#doctorPrescribesMeds" prefHeight="58.0" prefWidth="272.0" style="-fx-background-color: #6495ED;" text="Prescribe meds" AnchorPane.bottomAnchor="309.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="152.0">
+                <Button fx:id="prescribeMedsButton" layoutX="21.0" layoutY="152.0" mnemonicParsing="false" onAction="#doctorPrescribesMeds" prefHeight="58.0" prefWidth="272.0" style="-fx-background-color: #6495ED;" text="Prescribe meds" textFill="WHITE" AnchorPane.bottomAnchor="309.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="152.0">
                     <font>
                         <Font name="Ebrima" size="21.0" />
                     </font>
                 </Button>
-                <Button fx:id="patientHistoryButton" layoutX="18.0" layoutY="360.0" mnemonicParsing="false" onAction="#doctorAccessPatientsHistory" prefHeight="58.0" prefWidth="272.0" style="-fx-background-color: #6495ED;" text="Patients History" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="23.0">
+                <Button fx:id="patientHistoryButton" layoutX="18.0" layoutY="368.0" mnemonicParsing="false" onAction="#doctorAccessPatientsHistory" prefHeight="58.0" prefWidth="272.0" style="-fx-background-color: #6495ED;" text="Patients History" textFill="WHITE" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="23.0">
                     <font>
                         <Font name="Ebrima" size="21.0" />
                     </font>
                 </Button>
-                <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="270.0" layoutY="475.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@Images/icons8-logout-rounded-left-48.png" />
-                    </image>
-                </ImageView>
-                <Button fx:id="logOutButton" layoutX="271.0" layoutY="475.0" mnemonicParsing="false" onAction="#medicLogsOut" prefHeight="36.0" prefWidth="36.0" style="-fx-background-color: transparent; -fx-text-fill: transparent; -fx-border-fill: transparent;" text="Button" />
-                <Button fx:id="modifyMedsButton" layoutX="21.0" layoutY="260.0" mnemonicParsing="false" onAction="#doctorModifiesMeds" prefHeight="58.0" prefWidth="272.0" style="-fx-background-color: #6495ED;" text="Modify meds">
+                <Button fx:id="modifyMedsButton" layoutX="21.0" layoutY="260.0" mnemonicParsing="false" onAction="#doctorModifiesMeds" prefHeight="58.0" prefWidth="272.0" style="-fx-background-color: #6495ED;" text="Modify meds" textFill="WHITE">
                     <font>
                         <Font name="Ebrima" size="21.0" />
                     </font>
                 </Button>
+            <Button fx:id="logOutButton" layoutX="223.0" layoutY="482.0" mnemonicParsing="false" onAction="#medicLogsOut" style="-fx-background-color: #6495ED;" text="Log out!" textFill="WHITE">
+               <font>
+                  <Font name="Ebrima" size="15.0" />
+               </font>
+            </Button>
             </children>
         </AnchorPane>
     </right>
 </BorderPane>
-
