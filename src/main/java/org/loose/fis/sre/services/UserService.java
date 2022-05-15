@@ -124,4 +124,15 @@ public class UserService {
 
         x.setItems(list);
     }
+
+    public static void setAppointmentValidation(String username, String valid)
+    {
+        for(Appointment appointment : userRepository3.find())
+        {
+            if(Objects.equals(username, appointment.getUsername()))
+            {
+                appointment.setValid(valid);
+            }
+        }
+    }
 }
