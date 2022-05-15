@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="698.0" prefWidth="498.0" style="-fx-background-color: #FFFFF0;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.loose.fis.sre.controllers.MedicController">
+    <top>
+        <AnchorPane prefHeight="176.0" prefWidth="751.0" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="179.0" fitWidth="590.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@Images/Daco_818394.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </AnchorPane>
+    </top>
+    <left>
+        <AnchorPane prefHeight="519.0" prefWidth="185.0" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="114.0" fitWidth="127.0" layoutX="37.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="368.0" AnchorPane.leftAnchor="37.0" AnchorPane.topAnchor="37.0">
+                    <image>
+                        <Image url="@Images/PikPng.com_location-clipart-png_3702952.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="54.0" fitWidth="124.0" layoutX="29.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="249.0" AnchorPane.leftAnchor="31.0" AnchorPane.topAnchor="216.0">
+                    <image>
+                        <Image url="@Images/PikPng.com_blue-pill-png_4754130.png" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="114.0" fitWidth="127.0" layoutX="29.0" layoutY="340.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="31.0" AnchorPane.topAnchor="340.0">
+                    <image>
+                        <Image url="@Images/PngItem_789359.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </AnchorPane>
+    </left>
+    <right>
+        <AnchorPane prefHeight="519.0" prefWidth="338.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="manageAppointmentsButton" layoutX="18.0" layoutY="32.0" mnemonicParsing="false" onAction="#doctorManageAppointments" prefHeight="58.0" prefWidth="272.0" style="-fx-background-color: #6495ED;" text="Manage appointments" AnchorPane.bottomAnchor="429.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="23.0">
+                    <font>
+                        <Font name="Ebrima" size="21.0" />
+                    </font>
+                </Button>
+                <Button fx:id="prescribeMedsButton" layoutX="21.0" layoutY="152.0" mnemonicParsing="false" onAction="#doctorPrescribesMeds" prefHeight="58.0" prefWidth="272.0" style="-fx-background-color: #6495ED;" text="Prescribe meds" AnchorPane.bottomAnchor="309.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="152.0">
+                    <font>
+                        <Font name="Ebrima" size="21.0" />
+                    </font>
+                </Button>
+                <Button fx:id="patientHistoryButton" layoutX="18.0" layoutY="360.0" mnemonicParsing="false" onAction="#doctorAccessPatientsHistory" prefHeight="58.0" prefWidth="272.0" style="-fx-background-color: #6495ED;" text="Patients History" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="23.0">
+                    <font>
+                        <Font name="Ebrima" size="21.0" />
+                    </font>
+                </Button>
+                <ImageView fitHeight="37.0" fitWidth="39.0" layoutX="270.0" layoutY="475.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@Images/icons8-logout-rounded-left-48.png" />
+                    </image>
+                </ImageView>
+                <Button fx:id="logOutButton" layoutX="271.0" layoutY="475.0" mnemonicParsing="false" onAction="#medicLogsOut" prefHeight="36.0" prefWidth="36.0" style="-fx-background-color: transparent; -fx-text-fill: transparent; -fx-border-fill: transparent;" text="Button" />
+                <Button fx:id="modifyMedsButton" layoutX="21.0" layoutY="260.0" mnemonicParsing="false" onAction="#doctorModifiesMeds" prefHeight="58.0" prefWidth="272.0" style="-fx-background-color: #6495ED;" text="Modify meds">
+                    <font>
+                        <Font name="Ebrima" size="21.0" />
+                    </font>
+                </Button>
+            </children>
+        </AnchorPane>
+    </right>
+</BorderPane>
+
