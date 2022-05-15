@@ -1,5 +1,8 @@
 package org.loose.fis.sre.services;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ChoiceBox;
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.loose.fis.sre.exceptions.*;
@@ -90,6 +93,19 @@ public class UserService {
         if(v_password == 0) throw new WrongPasswordException();
 
         return 0;
+    }
+
+    //method that takes data from the database and adds it to the choiceBox (MEDIC!!)
+    public static void populateChoiceBox(ChoiceBox x){
+        ObservableList<String> list = FXCollections.observableArrayList();
+        for(User user : userRepository.find())
+        {
+            if(Objects.equals("Pacient", user.getRole())){
+                list.add(user.getLastName() + " " + user.getFirstName());
+            }
+        }
+
+        x.setItems(list);
     }
 
 }
