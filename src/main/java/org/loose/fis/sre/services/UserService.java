@@ -116,24 +116,12 @@ public class UserService {
     }
 
     //method that takes data from the appointment database and adds it to the choiceBox
-    public static void chooseAppointment(ChoiceBox x){
+    public static void chooseAppointment(ChoiceBox x) {
         ObservableList<String> list = FXCollections.observableArrayList();
-        for(Appointment appointment : userRepository3.find())
-        {
-                list.add(appointment.getUsername() + " " + appointment.getLastName() + " " + appointment.getFirstName() + " " + appointment.getDate() + " " + appointment.getTime() + " " + appointment.getPhone() + " " + appointment.getValid());
+        for (Appointment appointment : userRepository3.find()) {
+            list.add(appointment.getUsername() + " " + appointment.getLastName() + " " + appointment.getFirstName() + " " + appointment.getDate() + " " + appointment.getTime() + " " + appointment.getPhone() + " " + appointment.getValid());
         }
 
         x.setItems(list);
-    }
-
-    public static void setAppointmentValidation(String username, String valid)
-    {
-        for(Appointment appointment : userRepository3.find())
-        {
-            if(Objects.equals(username, appointment.getUsername()))
-            {
-                appointment.setValid(valid);
-            }
-        }
     }
 }
