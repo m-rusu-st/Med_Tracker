@@ -3,6 +3,7 @@ package org.loose.fis.sre.services;
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.loose.fis.sre.exceptions.*;
+import org.loose.fis.sre.model.Appointment;
 import org.loose.fis.sre.model.User;
 
 import java.nio.charset.StandardCharsets;
@@ -16,12 +17,22 @@ public class UserService {
 
     private static ObjectRepository<User> userRepository;
 
+    private static ObjectRepository<Appointment> userRepository3;
+
     public static void initDatabase() {
         Nitrite database = Nitrite.builder()
                 .filePath(getPathToFile("MedTracker.db").toFile())
                 .openOrCreate("test", "test");
 
         userRepository = database.getRepository(User.class);
+    }
+
+    public static void initDatabase3() {
+        Nitrite database = Nitrite.builder()
+                .filePath(getPathToFile("MedTrackerAppointments.db").toFile())
+                .openOrCreate("test", "test");
+
+        userRepository3 = database.getRepository(Appointment.class);
     }
 
     public static int addUser(String LastName, String FirstName, String phone, String address, String username, String password, String role) throws UsernameAlreadyExistsException, NoEmptyField {
@@ -32,6 +43,15 @@ public class UserService {
 
         if(role.equals("Pacient"))return 1;
         else if(role.equals("Medic"))return 2;
+
+        return 0;
+    }
+
+    public static int addAppointment(String LastName, String FirstName, String phone, String date, String time, String valid) throws NoEmptyField{
+
+        if(LastName.equals("") || FirstName.equals("") || phone.equals("") || phone.equals("") || date.equals("") || time.equals("")) throw new NoEmptyField();
+
+        userRepository3.insert(new Appointment(LastName, FirstName, phone, date, time, valid));
 
         return 0;
     }
