@@ -1,5 +1,8 @@
 package org.loose.fis.sre.services;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ChoiceBox;
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.loose.fis.sre.exceptions.*;
@@ -47,11 +50,11 @@ public class UserService {
         return 0;
     }
 
-    public static int addAppointment(String LastName, String FirstName, String phone, String date, String time, String valid) throws NoEmptyField{
+    public static int addAppointment(String username, String LastName, String FirstName, String phone, String date, String time, String valid) throws NoEmptyField{
 
-        if(LastName.equals("") || FirstName.equals("") || phone.equals("") || phone.equals("") || date.equals("") || time.equals("")) throw new NoEmptyField();
+        if(username.equals("") || LastName.equals("") || FirstName.equals("") || phone.equals("") || phone.equals("") || date.equals("") || time.equals("")) throw new NoEmptyField();
 
-        userRepository3.insert(new Appointment(LastName, FirstName, phone, date, time, valid));
+        userRepository3.insert(new Appointment(username, LastName, FirstName, phone, date, time, valid));
 
         return 0;
     }
@@ -112,4 +115,14 @@ public class UserService {
         return 0;
     }
 
+    //method that takes data from the appointment database and adds it to the choiceBox
+    public static void chooseAppointment(ChoiceBox x){
+        ObservableList<String> list = FXCollections.observableArrayList();
+        for(Appointment appointment : userRepository3.find())
+        {
+                list.add(appointment.getUsername() + " " + appointment.getLastName() + " " + appointment.getFirstName() + " " + appointment.getDate() + " " + appointment.getTime() + " " + appointment.getPhone() + " " + appointment.getValid());
+        }
+
+        x.setItems(list);
+    }
 }

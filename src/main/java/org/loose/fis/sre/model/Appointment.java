@@ -5,6 +5,7 @@ import org.dizitart.no2.objects.Id;
 public class Appointment {
 
     @Id
+    private String username;
     private String LastName;
     private String FirstName;
     private String phone;
@@ -12,7 +13,8 @@ public class Appointment {
     private String time;
     private String valid;
 
-    public Appointment(String LastName, String FirstName, String phone, String date, String time, String valid) {
+    public Appointment(String username, String LastName, String FirstName, String phone, String date, String time, String valid) {
+        this.username = username;
         this.LastName = LastName;
         this.FirstName = FirstName;
         this.phone = phone;
@@ -22,6 +24,14 @@ public class Appointment {
     }
 
     public Appointment() {
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getLastName() {
@@ -46,6 +56,22 @@ public class Appointment {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String phone) {
+        this.time = time;
     }
 
     public String getValid() {

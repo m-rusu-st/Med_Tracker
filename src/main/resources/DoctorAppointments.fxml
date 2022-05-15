@@ -32,14 +32,14 @@
                </font>
             </Label>
             <Line endX="193.0" layoutX="218.0" layoutY="92.0" startX="-152.0" stroke="CORNFLOWERBLUE" />
-            <ChoiceBox layoutX="66.0" layoutY="33.0" prefHeight="59.0" prefWidth="345.0" style="-fx-background-color: transparent;" />
+            <ChoiceBox fx:id="selectAppointment" layoutX="66.0" layoutY="33.0" prefHeight="59.0" prefWidth="345.0" style="-fx-background-color: transparent;" />
             <Label layoutX="94.0" layoutY="115.0" prefHeight="37.0" prefWidth="203.0" style="-fx-background-color: transparent;" text="Validate:" textFill="#a3a3a3" AnchorPane.leftAnchor="88.0">
                <font>
                   <Font name="Times New Roman" size="25.0" />
                </font>
             </Label>
             <Line endX="193.0" layoutX="218.0" layoutY="211.0" startX="-152.0" stroke="CORNFLOWERBLUE" />
-            <ChoiceBox layoutX="66.0" layoutY="152.0" prefHeight="59.0" prefWidth="345.0" style="-fx-background-color: transparent;" />
+            <ChoiceBox fx:id="validate" layoutX="66.0" layoutY="152.0" prefHeight="59.0" prefWidth="345.0" style="-fx-background-color: transparent;" />
          </children>
       </AnchorPane>
    </center>
@@ -51,13 +51,13 @@
                   <Image url="@Images/istockphoto-1297156648-612x612.jpg" />
                </image>
             </ImageView>
-            <Button layoutX="361.0" layoutY="19.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="75.0" style="-fx-background-color: #6495ed;" text="Save" textFill="WHITE" />
+            <Button fx:id="saveButton" layoutX="361.0" layoutY="19.0" mnemonicParsing="false" onAction="#saveInfo" prefHeight="34.0" prefWidth="75.0" style="-fx-background-color: #6495ed;" text="Save" textFill="WHITE" />
             <ImageView fitHeight="34.0" fitWidth="34.0" layoutX="403.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@Images/icons8-logout-rounded-left-48.png" />
                </image>
             </ImageView>
-            <Button layoutX="402.0" layoutY="138.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="37.0" style="-fx-background-color: trasnaprent; -fx-text-fill: transparent;" text="Button" />
+            <Button fx:id="back" layoutX="402.0" layoutY="138.0" mnemonicParsing="false" onAction="#goBack" prefHeight="32.0" prefWidth="37.0" style="-fx-background-color: trasnaprent; -fx-text-fill: transparent;" text="Button" />
          </children>
       </AnchorPane>
    </bottom>
