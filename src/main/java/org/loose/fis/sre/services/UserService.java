@@ -8,17 +8,22 @@ import org.dizitart.no2.objects.ObjectRepository;
 import org.loose.fis.sre.exceptions.*;
 import org.loose.fis.sre.model.Appointment;
 import org.loose.fis.sre.model.User;
+import org.loose.fis.sre.model.Medicamentation;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 import static org.loose.fis.sre.services.FileSystemService.getPathToFile;
+import static org.loose.fis.sre.services.FileSystemService.getPathToFile2;
 
 public class UserService {
 
     private static ObjectRepository<User> userRepository;
+    private static ObjectRepository<Medicamentation> userRepository2;
 
     private static ObjectRepository<Appointment> userRepository3;
 
@@ -28,6 +33,15 @@ public class UserService {
                 .openOrCreate("test", "test");
 
         userRepository = database.getRepository(User.class);
+    }
+
+
+    public static void initDatabase2() {
+        Nitrite database = Nitrite.builder()
+                .filePath(getPathToFile2("MedTracker2.db").toFile())
+                .openOrCreate("test", "test");
+
+        userRepository2 = database.getRepository(Medicamentation.class);
     }
 
     public static void initDatabase3() {
@@ -48,6 +62,20 @@ public class UserService {
         else if(role.equals("Medic"))return 2;
 
         return 0;
+    }
+
+
+    public static int addMedicamentation(String username, String medicamentation, String dosage, String date, String treatmentComplete) throws EmptyFieldsDoctorException {
+
+        if(medicamentation.equals("") || dosage.equals("") || date.equals("") || treatmentComplete.equals(""))throw new EmptyFieldsDoctorException();
+        userRepository2.insert(new Medicamentation(username, medicamentation, dosage, date, treatmentComplete));
+
+        return 0;
+    }
+
+    public static void deleteMedicamentation(Medicamentation meds)
+    {
+        userRepository2.remove(meds);
     }
 
     public static int addAppointment(String username, String LastName, String FirstName, String phone, String date, String time, String valid) throws NoEmptyField{
@@ -115,6 +143,17 @@ public class UserService {
         return 0;
     }
 
+
+    //method that takes data from the database and adds it to the choiceBox (MEDIC!!)
+    public static void populateChoiceBox(ChoiceBox x){
+        ObservableList<String> list = FXCollections.observableArrayList();
+        for(User user : userRepository.find())
+        {
+            if(Objects.equals("Pacient", user.getRole())){
+                list.add(user.getUsername());
+            }
+        }
+    }
     //method that takes data from the appointment database and adds it to the choiceBox
     public static void chooseAppointment(ChoiceBox x) {
         ObservableList<String> list = FXCollections.observableArrayList();
@@ -124,6 +163,31 @@ public class UserService {
 
         x.setItems(list);
     }
+
+
+    //Objects.equals(newDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+    public static void modifyMedicamentation(String username, String med, String newDosage, String newDate, String treatmentComplete) throws NoEmptyField
+    {
+        for(Medicamentation medicamentation : userRepository2.find())
+        {
+            if(Objects.equals(username, medicamentation.getUsername()) && Objects.equals(med, medicamentation.getMedicamentation()))
+            {
+                if(Objects.equals(newDosage, "") || Objects.equals(treatmentComplete, "")) throw new NoEmptyField();
+                else{
+                     medicamentation.setDosage(newDosage);
+                     //userRepository2.update(medicamentation);
+                     medicamentation.setEndDate(newDate);
+                     //userRepository2.update(medicamentation);
+                     medicamentation.setTreatmentComplete(treatmentComplete);
+                  //  System.out.println(newDosage + " " + treatmentComplete + " " + newDate);
+                     userRepository2.update(medicamentation);
+                }
+
+            }
+        }
+    }
+
+
 
     public static void setAppointmentValidation(String username, String valid)
     {
@@ -135,4 +199,5 @@ public class UserService {
             }
         }
     }
+
 }

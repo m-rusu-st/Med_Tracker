@@ -11,4 +11,6 @@ public class FileSystemService {
     public static Path getPathToFile(String... path) {
         return APPLICATION_HOME_PATH.resolve(Paths.get(".", path));
     }
+    public static Path getPathToFile2(String... path) {return APPLICATION_HOME_PATH.resolve(Paths.get(".", path)); }
+
 }

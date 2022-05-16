@@ -44,6 +44,7 @@ public class LogInController{
                 stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
                 stage.setScene(scene);
+                stage.centerOnScreen();
                 stage.show();
             }
             else if(check == 2){
@@ -51,6 +52,7 @@ public class LogInController{
                 stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
                 stage.setScene(scene);
+                stage.centerOnScreen();
                 stage.show();
             }
         }catch(EmptyUsernamePasswordFieldException e){
