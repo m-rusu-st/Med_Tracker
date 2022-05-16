@@ -6,6 +6,7 @@ import javafx.scene.control.ChoiceBox;
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.loose.fis.sre.exceptions.*;
+import org.loose.fis.sre.model.Appointment;
 import org.loose.fis.sre.model.User;
 import org.loose.fis.sre.model.Medicamentation;
 
@@ -24,6 +25,8 @@ public class UserService {
     private static ObjectRepository<User> userRepository;
     private static ObjectRepository<Medicamentation> userRepository2;
 
+    private static ObjectRepository<Appointment> userRepository3;
+
     public static void initDatabase() {
         Nitrite database = Nitrite.builder()
                 .filePath(getPathToFile("MedTracker.db").toFile())
@@ -32,12 +35,21 @@ public class UserService {
         userRepository = database.getRepository(User.class);
     }
 
+
     public static void initDatabase2() {
         Nitrite database = Nitrite.builder()
                 .filePath(getPathToFile2("MedTracker2.db").toFile())
                 .openOrCreate("test", "test");
 
         userRepository2 = database.getRepository(Medicamentation.class);
+    }
+
+    public static void initDatabase3() {
+        Nitrite database = Nitrite.builder()
+                .filePath(getPathToFile("MedTrackerAppointments.db").toFile())
+                .openOrCreate("test", "test");
+
+        userRepository3 = database.getRepository(Appointment.class);
     }
 
     public static int addUser(String LastName, String FirstName, String phone, String address, String username, String password, String role) throws UsernameAlreadyExistsException, NoEmptyField {
@@ -52,6 +64,7 @@ public class UserService {
         return 0;
     }
 
+
     public static int addMedicamentation(String username, String medicamentation, String dosage, String date, String treatmentComplete) throws EmptyFieldsDoctorException {
 
         if(medicamentation.equals("") || dosage.equals("") || date.equals("") || treatmentComplete.equals(""))throw new EmptyFieldsDoctorException();
@@ -63,6 +76,15 @@ public class UserService {
     public static void deleteMedicamentation(Medicamentation meds)
     {
         userRepository2.remove(meds);
+    }
+
+    public static int addAppointment(String username, String LastName, String FirstName, String phone, String date, String time, String valid) throws NoEmptyField{
+
+        if(username.equals("") || LastName.equals("") || FirstName.equals("") || phone.equals("") || phone.equals("") || date.equals("") || time.equals("")) throw new NoEmptyField();
+
+        userRepository3.insert(new Appointment(username, LastName, FirstName, phone, date, time, valid));
+
+        return 0;
     }
 
     private static void checkUserDoesNotAlreadyExist(String username) throws UsernameAlreadyExistsException {
@@ -121,6 +143,7 @@ public class UserService {
         return 0;
     }
 
+
     //method that takes data from the database and adds it to the choiceBox (MEDIC!!)
     public static void populateChoiceBox(ChoiceBox x){
         ObservableList<String> list = FXCollections.observableArrayList();
@@ -130,9 +153,17 @@ public class UserService {
                 list.add(user.getUsername());
             }
         }
+    }
+    //method that takes data from the appointment database and adds it to the choiceBox
+    public static void chooseAppointment(ChoiceBox x) {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        for (Appointment appointment : userRepository3.find()) {
+            list.add(appointment.getUsername() + " " + appointment.getLastName() + " " + appointment.getFirstName() + " " + appointment.getDate() + " " + appointment.getTime() + " " + appointment.getPhone() + " " + appointment.getValid());
+        }
 
         x.setItems(list);
     }
+
 
     //Objects.equals(newDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
     public static void modifyMedicamentation(String username, String med, String newDosage, String newDate, String treatmentComplete) throws NoEmptyField
@@ -156,5 +187,17 @@ public class UserService {
         }
     }
 
+
+
+    public static void setAppointmentValidation(String username, String valid)
+    {
+        for(Appointment appointment : userRepository3.find())
+        {
+            if(Objects.equals(username, appointment.getUsername()))
+            {
+                appointment.setValid(valid);
+            }
+        }
+    }
 
 }
