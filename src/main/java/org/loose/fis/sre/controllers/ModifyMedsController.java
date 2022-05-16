@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import org.loose.fis.sre.exceptions.*;
+import org.loose.fis.sre.model.Medicamentation;
 import org.loose.fis.sre.services.UserService;
 
 import java.io.IOException;
@@ -30,6 +31,8 @@ public class ModifyMedsController {
     private Button saveButton;
     @FXML
     private Button DeleteButton;
+    @FXML
+    private Label wrongField;
 
     private Stage stage;
     private Parent root;
@@ -45,12 +48,17 @@ public class ModifyMedsController {
 
     public void doctorDeletesMed(ActionEvent e) throws IOException
     {
-
+         Medicamentation meds = new Medicamentation((String)patientsList.getValue(), (String)medsChoiceBox.getValue(), dosageTextField.getText(), datePicker.getValue(), (String)treatmentChoiceBox.getValue());
+         UserService.deleteMedicamentation(meds);
     }
 
-    public void doctorSavesChanges(ActionEvent e) throws IOException
+    public void doctorSavesChanges(ActionEvent e) throws IOException, NoEmptyField
     {
-
+        try{
+            UserService.modifyMedicamentation((String)patientsList.getValue(), (String)medsChoiceBox.getValue(), dosageTextField.getText(), datePicker.getValue(), (String)treatmentChoiceBox.getValue());
+        }catch(NoEmptyField event){
+            wrongField.setText(event.getMessage());
+        }
     }
 
     public void userGoesToPreviousPageButton(ActionEvent event) throws IOException

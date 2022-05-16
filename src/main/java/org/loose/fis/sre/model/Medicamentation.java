@@ -31,9 +31,15 @@ public class Medicamentation {
 
     public String getDosage(){return dosage;}
 
+    public void setDosage(String dosage){this.dosage = dosage;}
+
     public LocalDate getEndDate(){return endDate;}
 
+    public void setEndDate(LocalDate endDate){this.endDate = endDate;}
+
     public String getTreatmentComplete(){return treatmentComplete;}
+
+    public void setTreatmentComplete(String treatmentComplete){this.treatmentComplete = treatmentComplete;}
 
     @Override
     public boolean equals(Object o) {

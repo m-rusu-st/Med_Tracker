@@ -59,6 +59,10 @@ public class UserService {
         return 0;
     }
 
+    public static void deleteMedicamentation(Medicamentation meds)
+    {
+        userRepository2.remove(meds);
+    }
 
     private static void checkUserDoesNotAlreadyExist(String username) throws UsernameAlreadyExistsException {
         for (User user : userRepository.find()) {
@@ -139,5 +143,23 @@ public class UserService {
 
         x.setItems(list);
     }
+
+    public static void modifyMedicamentation(String username, String med, String newDosage, LocalDate newDate, String treatmentComplete) throws NoEmptyField
+    {
+        for(Medicamentation medicamentation : userRepository2.find())
+        {
+            if(Objects.equals(username, medicamentation.getUsername()) && Objects.equals(med, medicamentation.getMedicamentation()))
+            {
+                if(Objects.equals(newDosage, "") || Objects.equals(newDate, "") || Objects.equals(treatmentComplete, "")) throw new NoEmptyField();
+                else{
+                     medicamentation.setDosage(newDosage);
+                     medicamentation.setEndDate(newDate);
+                     medicamentation.setTreatmentComplete(treatmentComplete);
+                }
+
+            }
+        }
+    }
+
 
 }
