@@ -13,12 +13,13 @@ import org.loose.fis.sre.model.Medicamentation;
 import org.loose.fis.sre.services.UserService;
 
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 
 public class ModifyMedsController {
     @FXML
     private ChoiceBox<String> patientsList;
     @FXML
-    private ChoiceBox<String> medsChoiceBox;
+    private TextField meds;
     @FXML
     private TextField dosageTextField;
     @FXML
@@ -41,21 +42,20 @@ public class ModifyMedsController {
     public void initialize()
     {
         UserService.populateChoiceBox(patientsList);
-        //UserService.populateChoiceBox2(medsChoiceBox,(String) patientsList.getValue());
         treatmentChoiceBox.getItems().addAll("Da!", "Nu!");
 
     }
 
     public void doctorDeletesMed(ActionEvent e) throws IOException
     {
-         Medicamentation meds = new Medicamentation((String)patientsList.getValue(), (String)medsChoiceBox.getValue(), dosageTextField.getText(), datePicker.getValue(), (String)treatmentChoiceBox.getValue());
-         UserService.deleteMedicamentation(meds);
+         Medicamentation medicine = new Medicamentation((String)patientsList.getValue(), meds.getText(), dosageTextField.getText(), datePicker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), (String)treatmentChoiceBox.getValue());
+         UserService.deleteMedicamentation(medicine);
     }
 
     public void doctorSavesChanges(ActionEvent e) throws IOException, NoEmptyField
     {
         try{
-            UserService.modifyMedicamentation((String)patientsList.getValue(), (String)medsChoiceBox.getValue(), dosageTextField.getText(), datePicker.getValue(), (String)treatmentChoiceBox.getValue());
+            UserService.modifyMedicamentation((String)patientsList.getValue(), meds.getText(), dosageTextField.getText(), datePicker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), (String)treatmentChoiceBox.getValue());
         }catch(NoEmptyField event){
             wrongField.setText(event.getMessage());
         }

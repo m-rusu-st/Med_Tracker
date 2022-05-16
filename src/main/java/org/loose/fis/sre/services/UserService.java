@@ -13,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 import static org.loose.fis.sre.services.FileSystemService.getPathToFile;
@@ -51,7 +52,7 @@ public class UserService {
         return 0;
     }
 
-    public static int addMedicamentation(String username, String medicamentation, String dosage, LocalDate date, String treatmentComplete) throws EmptyFieldsDoctorException {
+    public static int addMedicamentation(String username, String medicamentation, String dosage, String date, String treatmentComplete) throws EmptyFieldsDoctorException {
 
         if(medicamentation.equals("") || dosage.equals("") || date.equals("") || treatmentComplete.equals(""))throw new EmptyFieldsDoctorException();
         userRepository2.insert(new Medicamentation(username, medicamentation, dosage, date, treatmentComplete));
@@ -133,28 +134,22 @@ public class UserService {
         x.setItems(list);
     }
 
-    public static void populateChoiceBox2(ChoiceBox x, String username){
-        ObservableList<String> list = FXCollections.observableArrayList();
-        for(Medicamentation user : userRepository2.find())
-        {
-            if(Objects.equals(username, user.getUsername()))
-                list.add(user.getUsername() +" " + user.getMedicamentation() + " " + user.getDosage() + " " + user.getEndDate());
-        }
-
-        x.setItems(list);
-    }
-
-    public static void modifyMedicamentation(String username, String med, String newDosage, LocalDate newDate, String treatmentComplete) throws NoEmptyField
+    //Objects.equals(newDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+    public static void modifyMedicamentation(String username, String med, String newDosage, String newDate, String treatmentComplete) throws NoEmptyField
     {
         for(Medicamentation medicamentation : userRepository2.find())
         {
             if(Objects.equals(username, medicamentation.getUsername()) && Objects.equals(med, medicamentation.getMedicamentation()))
             {
-                if(Objects.equals(newDosage, "") || Objects.equals(newDate, "") || Objects.equals(treatmentComplete, "")) throw new NoEmptyField();
+                if(Objects.equals(newDosage, "") || Objects.equals(treatmentComplete, "")) throw new NoEmptyField();
                 else{
                      medicamentation.setDosage(newDosage);
+                     //userRepository2.update(medicamentation);
                      medicamentation.setEndDate(newDate);
+                     //userRepository2.update(medicamentation);
                      medicamentation.setTreatmentComplete(treatmentComplete);
+                  //  System.out.println(newDosage + " " + treatmentComplete + " " + newDate);
+                     userRepository2.update(medicamentation);
                 }
 
             }

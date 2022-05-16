@@ -14,6 +14,7 @@ import org.loose.fis.sre.exceptions.*;
 import org.loose.fis.sre.model.User;
 import org.loose.fis.sre.services.UserService;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 
@@ -51,7 +52,7 @@ public class PrescribeMedsController {
     {
         try{
 
-            UserService.addMedicamentation((String) patientsList.getValue(), addMedicineField.getText(), dosageField.getText(), datePicker.getValue(), (String)treatmentChoiceBox.getValue());
+            UserService.addMedicamentation((String) patientsList.getValue(), addMedicineField.getText(), dosageField.getText(), datePicker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), (String)treatmentChoiceBox.getValue());
 
         }catch(EmptyFieldsDoctorException e){
             wrongField.setText(e.getMessage());

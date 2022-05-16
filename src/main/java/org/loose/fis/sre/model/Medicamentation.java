@@ -10,10 +10,10 @@ public class Medicamentation {
     String username;
     String medicamentation;
     String dosage;
-    LocalDate endDate;
+    String endDate;
     String treatmentComplete;
 
-    public Medicamentation(String username, String medicamentation, String dosage, LocalDate endDate, String treatmentComplete){
+    public Medicamentation(String username, String medicamentation, String dosage, String endDate, String treatmentComplete){
         this.username = username;
         this.medicamentation = medicamentation;
         this.dosage = dosage;
@@ -23,6 +23,7 @@ public class Medicamentation {
 
     public Medicamentation() {
     }
+
     public String getUsername(){return username;}
 
     public String getMedicamentation(){return medicamentation;}
@@ -33,9 +34,9 @@ public class Medicamentation {
 
     public void setDosage(String dosage){this.dosage = dosage;}
 
-    public LocalDate getEndDate(){return endDate;}
+    public String getEndDate(){return endDate;}
 
-    public void setEndDate(LocalDate endDate){this.endDate = endDate;}
+    public void setEndDate(String endDate){this.endDate = endDate;}
 
     public String getTreatmentComplete(){return treatmentComplete;}
 

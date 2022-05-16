@@ -42,12 +42,11 @@
     <right>
         <AnchorPane prefHeight="518.0" prefWidth="370.0" BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="-39.0" layoutY="6.0" prefHeight="36.0" prefWidth="195.0" text="Please select a patient:" textFill="#a3a3a3" AnchorPane.leftAnchor="-39.0">
+                <Label layoutX="-39.0" layoutY="6.0" prefHeight="36.0" prefWidth="267.0" text="Please select patient:" textFill="#a3a3a3" AnchorPane.leftAnchor="-39.0">
                     <font>
                         <Font name="Ebrima" size="18.0" />
                     </font>
                 </Label>
-                <ChoiceBox fx:id="patientsList" layoutX="-39.0" layoutY="31.0" prefHeight="34.0" prefWidth="274.0" style="-fx-background-color: transparent; -fx-font-size: 18;" AnchorPane.leftAnchor="-39.0" />
                 <Line endX="167.0" layoutX="-205.0" layoutY="65.0" startX="434.5" stroke="CORNFLOWERBLUE" AnchorPane.bottomAnchor="452.5" AnchorPane.leftAnchor="-38.5" />
                 <ImageView fitHeight="34.0" fitWidth="47.0" layoutX="297.0" layoutY="477.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -65,7 +64,7 @@
                   <Font name="Ebrima" size="18.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="medsChoiceBox" layoutX="-39.0" layoutY="108.0" prefHeight="34.0" prefWidth="274.0" style="-fx-background-color: transparent; -fx-font-size: 18;" />
+            <ChoiceBox fx:id="patientsList" layoutX="-42.0" layoutY="27.0" prefHeight="34.0" prefWidth="274.0" style="-fx-background-color: transparent; -fx-font-size: 18;" />
             <Line endX="167.0" layoutX="-205.0" layoutY="142.0" startX="434.5" stroke="CORNFLOWERBLUE" />
             <TextField fx:id="dosageTextField" layoutX="-39.0" layoutY="159.0" prefHeight="34.0" prefWidth="274.0" promptText="Dosage" style="-fx-background-color: transparent;">
                <font>
@@ -84,6 +83,10 @@
             </Button>
             <Line endX="167.0" layoutX="-203.0" layoutY="264.0" startX="434.5" stroke="CORNFLOWERBLUE" />
             <Label fx:id="wrongField" layoutX="-42.0" layoutY="376.0" prefHeight="36.0" prefWidth="279.0" />
+            <TextField fx:id="meds" layoutX="-42.0" layoutY="109.0" prefHeight="34.0" prefWidth="274.0" style="-fx-background-color: transparent;">
+               <font>
+                  <Font name="Ebrima" size="18.0" />
+               </font></TextField>
             </children>
         </AnchorPane>
     </right>
