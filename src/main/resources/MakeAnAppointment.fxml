@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.loose.fis.sre.controllers.MakeAnAppointmentController">
+    <left>
+        <AnchorPane prefHeight="400.0" prefWidth="200.0" style="-fx-background-color: #6495ED;" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="111.0" fitWidth="140.0" layoutX="38.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="38.0" AnchorPane.rightAnchor="96.96875">
+                    <image>
+                        <Image url="@Images/SeekPng.com_medical-symbol-png_623997.png" />
+                    </image>
+                </ImageView>
+                <Label layoutX="50.0" layoutY="218.0" prefHeight="26.0" prefWidth="123.0" text="Welcome To" textFill="WHITE">
+                    <font>
+                        <Font name="Ebrima Bold" size="18.0" />
+                    </font>
+                </Label>
+                <Label layoutX="33.0" layoutY="244.0" text="MED TRACKER" textFill="WHITE">
+                    <font>
+                        <Font name="Impact" size="25.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+    </left>
+    <right>
+        <AnchorPane prefHeight="426.0" prefWidth="399.0" style="-fx-background-color: #fff;" BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="50.0" layoutY="20.0" text="Appointment details" AnchorPane.leftAnchor="50.0">
+                    <font>
+                        <Font name="Impact" size="25.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="LastNameField" layoutX="31.0" layoutY="67.0" prefHeight="40.0" prefWidth="250.0" promptText="Last Name" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="98.0" AnchorPane.topAnchor="67.0">
+                    <font>
+                        <Font name="Ebrima" size="18.0" />
+                    </font>
+                </TextField>
+                <Line endX="156.0" layoutX="122.0" layoutY="108.0" startX="-91.0" stroke="CORNFLOWERBLUE" AnchorPane.leftAnchor="30.5" AnchorPane.rightAnchor="120.5" AnchorPane.topAnchor="107.5" />
+                <TextField fx:id="FirstNameField" layoutX="31.0" layoutY="117.0" prefHeight="40.0" prefWidth="250.0" promptText="First Name" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="98.0" AnchorPane.topAnchor="117.0">
+                    <font>
+                        <Font name="Ebrima" size="18.0" />
+                    </font>
+                </TextField>
+                <Line endX="156.0" layoutX="122.0" layoutY="158.0" startX="-91.0" stroke="CORNFLOWERBLUE" AnchorPane.leftAnchor="30.5" AnchorPane.rightAnchor="120.5" AnchorPane.topAnchor="157.5" />
+                <TextField fx:id="PhoneField" layoutX="31.0" layoutY="167.0" prefHeight="40.0" prefWidth="250.0" promptText="Phone Number" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="98.0" AnchorPane.topAnchor="167.0">
+                    <font>
+                        <Font name="Ebrima" size="18.0" />
+                    </font>
+                </TextField>
+                <Line endX="156.0" layoutX="119.0" layoutY="336.0" startX="-91.0" stroke="CORNFLOWERBLUE" AnchorPane.leftAnchor="27.5" AnchorPane.rightAnchor="123.5" AnchorPane.topAnchor="335.5" />
+                <Line endX="156.0" layoutX="122.0" layoutY="208.0" startX="-91.0" stroke="CORNFLOWERBLUE" AnchorPane.leftAnchor="30.5" AnchorPane.rightAnchor="120.5" AnchorPane.topAnchor="207.5" />
+                <TextField fx:id="UsernameField" layoutX="31.0" layoutY="217.0" prefHeight="40.0" prefWidth="250.0" promptText="Username" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="98.0" AnchorPane.topAnchor="217.0">
+                    <font>
+                        <Font name="Ebrima" size="18.0" />
+                    </font>
+                </TextField>
+                <Line endX="156.0" layoutX="122.0" layoutY="259.0" startX="-91.0" stroke="CORNFLOWERBLUE" AnchorPane.leftAnchor="30.5" AnchorPane.rightAnchor="120.5" AnchorPane.topAnchor="258.5" />
+                <ChoiceBox fx:id="doctorPicker" layoutX="30.0" layoutY="358.0" prefHeight="35.0" prefWidth="250.0" style="-fx-background-color: transparent; -fx-font-size: 18;" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="119.0" AnchorPane.topAnchor="358.0" />
+                <Line endX="156.0" layoutX="122.0" layoutY="396.0" startX="-91.0" stroke="CORNFLOWERBLUE" AnchorPane.leftAnchor="30.5" AnchorPane.rightAnchor="120.5" AnchorPane.topAnchor="395.5" />
+                <Button fx:id="appointment" layoutX="31.0" layoutY="443.0" mnemonicParsing="false" onAction="#makeAppointment" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: #6495ED;" text="Make appointment" textFill="WHITE" AnchorPane.leftAnchor="31.0">
+                    <font>
+                        <Font name="Ebrima Bold" size="18.0" />
+                    </font>
+                </Button>
+                <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="330.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@Images/icons8-logout-rounded-left-48.png" />
+                    </image>
+                </ImageView>
+                <Button fx:id="Back" layoutX="329.0" layoutY="20.0" mnemonicParsing="false" onAction="#goBack" prefHeight="33.0" prefWidth="41.0" style="-fx-background-color: transparent; -fx-text-fill: transparent;" text="Button" />
+                <Label fx:id="emptyField" layoutX="31.0" layoutY="408.0" prefHeight="29.0" prefWidth="297.0" />
+            <Label fx:id="emptyField1" layoutX="44.0" layoutY="336.0" prefHeight="32.0" prefWidth="215.0" text="Choose a doctor:" textFill="#a3a3a3" AnchorPane.leftAnchor="44.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="datePicker" layoutX="25.0" layoutY="293.0" prefHeight="41.0" prefWidth="166.0" />
+            <ChoiceBox fx:id="timePicker" layoutX="196.0" layoutY="294.0" prefHeight="29.0" prefWidth="89.0" style="-fx-background-color: transparent; -fx-font-size: 18;" />
+            <Label fx:id="emptyField11" layoutX="43.0" layoutY="266.0" prefHeight="10.0" prefWidth="173.0" text="Date and time:" textFill="#a3a3a3">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            </children>
+        </AnchorPane>
+    </right>
+</BorderPane>

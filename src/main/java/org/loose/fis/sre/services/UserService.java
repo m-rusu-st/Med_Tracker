@@ -181,6 +181,31 @@ public class UserService {
         x.setItems(list);
     }
 
+    public static void populateChoiceBox2(ChoiceBox x){
+        ObservableList<String> list = FXCollections.observableArrayList();
+        int h1, h2, m1, m2;
+        for(h1=0; h1<=2; h1=h1+1)
+            for(h2=0; h2<=9; h2=h2+1)
+                for(m1=0; m1<=5; m1=m1+1)
+                    for(m2=0; m2<=9; m2=m2+10)
+                            if(h1==2 && h2>3) break;
+                            else
+                            list.add(h1 + "" + h2 + ":" + m1 + m2);
+
+        x.setItems(list);
+    }
+
+    public static void populateChoiceBox3(ChoiceBox x){
+        ObservableList<String> list = FXCollections.observableArrayList();
+        for(User user : userRepository.find())
+        {
+            if(Objects.equals("Medic", user.getRole())){
+                list.add(user.getUsername() + " " + user.getSpecialty());
+            }
+        }
+        x.setItems(list);
+    }
+
     //method that takes data from the appointment database and adds it to the choiceBox
     public static void chooseAppointment(ChoiceBox x) {
         ObservableList<String> list = FXCollections.observableArrayList();
