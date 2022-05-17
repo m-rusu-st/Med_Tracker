@@ -153,7 +153,9 @@ public class UserService {
                 list.add(user.getUsername());
             }
         }
+        x.setItems(list);
     }
+
     //method that takes data from the appointment database and adds it to the choiceBox
     public static void chooseAppointment(ChoiceBox x) {
         ObservableList<String> list = FXCollections.observableArrayList();
