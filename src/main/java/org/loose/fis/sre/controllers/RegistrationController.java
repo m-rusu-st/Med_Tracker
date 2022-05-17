@@ -59,21 +59,12 @@ public class RegistrationController{
         stage.centerOnScreen();
         stage.show();
     }
-    /*@FXML
-    public void handleRegisterAction() {
-        try {
-            UserService.addUser(UsernameBox.getText(), ParolaBox.getText(), (String) choiceBox.getValue());
-            registrationMessage.setText("Account created successfully!");
-        } catch (UsernameAlreadyExistsException e) {
-            registrationMessage.setText(e.getMessage());
-        }
-   }*/
 
     public void createAccount(ActionEvent event) throws IOException, UsernameAlreadyExistsException, NoEmptyField
     {
 
         try{
-            int check = UserService.addUser(LastNameField.getText(), FirstNameField.getText(), PhoneField.getText(), AddressField.getText(), UsernameField.getText(), PasswordField.getText(), (String) ChoiceBox.getValue());
+            int check = UserService.addUser(LastNameField.getText(), FirstNameField.getText(), PhoneField.getText(), AddressField.getText(), UsernameField.getText(), PasswordField.getText(), (String) ChoiceBox.getValue(), "", "");
 
             if(check == 1){
                 Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Pacient.fxml"));
@@ -82,7 +73,7 @@ public class RegistrationController{
                 stage.setScene(scene);
                 stage.show();
             }else if(check == 2){
-                Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Medic.fxml"));
+                Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("ChooseSpecialty.fxml"));
                 Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
                 stage.setScene(scene);

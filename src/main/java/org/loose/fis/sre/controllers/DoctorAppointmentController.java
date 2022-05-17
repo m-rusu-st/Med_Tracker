@@ -37,11 +37,10 @@ public class DoctorAppointmentController {
 
     public void saveInfo(ActionEvent event) throws IOException
     {
-        UserService.setAppointmentValidation((String) selectAppointment.getValue(), (String) validate.getValue());
+       UserService.setAppointmentValidation((String) selectAppointment.getValue(), (String) validate.getValue());
     }
 
-    public void userGoesToPreviousPageButton(ActionEvent event) throws IOException
-    {
+    public void goBack(ActionEvent event) throws IOException{
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Medic.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);

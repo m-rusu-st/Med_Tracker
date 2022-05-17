@@ -18,6 +18,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         UserService.initDatabase();
         UserService.initDatabase2();
+        UserService.initDatabase3();
+
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("login.fxml"));
         primaryStage.initStyle(StageStyle.UNDECORATED);//remove the title bar
         primaryStage.setTitle("Log in!");

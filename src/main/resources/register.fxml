@@ -78,7 +78,7 @@
                </font>
             </PasswordField>
             <Line endX="156.0" layoutX="122.0" layoutY="345.0" startX="-91.0" stroke="CORNFLOWERBLUE" AnchorPane.leftAnchor="30.5" AnchorPane.rightAnchor="120.5" AnchorPane.topAnchor="344.5" />
-            <ChoiceBox fx:id="ChoiceBox" layoutX="29.0" layoutY="360.0" prefHeight="35.0" prefWidth="250.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="119.0" AnchorPane.topAnchor="360.0" />
+            <ChoiceBox fx:id="ChoiceBox" layoutX="29.0" layoutY="360.0" prefHeight="35.0" prefWidth="250.0" style="-fx-background-color: transparent; -fx-font-size: 18;" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="119.0" AnchorPane.topAnchor="360.0" />
             <Line endX="156.0" layoutX="122.0" layoutY="395.0" startX="-91.0" stroke="CORNFLOWERBLUE" AnchorPane.leftAnchor="30.5" AnchorPane.rightAnchor="120.5" AnchorPane.topAnchor="394.5" />
             <Button fx:id="Register" layoutX="29.0" layoutY="451.0" mnemonicParsing="false" onAction="#createAccount" prefHeight="35.0" prefWidth="300.0" style="-fx-background-color: #6495ED;" text="Register" textFill="WHITE" AnchorPane.leftAnchor="29.0">
                <font>
