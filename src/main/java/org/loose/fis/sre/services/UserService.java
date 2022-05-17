@@ -102,16 +102,6 @@ public class UserService {
         userRepository2.remove(meds);
     }
 
-
-    public static int addAppointment(String username, String LastName, String FirstName, String phone, String date, String time, String valid) throws NoEmptyField{
-
-        if(username.equals("") || LastName.equals("") || FirstName.equals("") || phone.equals("") || phone.equals("") || date.equals("") || time.equals("")) throw new NoEmptyField();
-
-        userRepository3.insert(new Appointment(username, LastName, FirstName, phone, date, time, valid));
-
-        return 0;
-    }
-
     private static void checkUserDoesNotAlreadyExist(String username) throws UsernameAlreadyExistsException {
         for (User user : userRepository.find()) {
             if (Objects.equals(username, user.getUsername()))
@@ -206,16 +196,6 @@ public class UserService {
         x.setItems(list);
     }
 
-    //method that takes data from the appointment database and adds it to the choiceBox
-    public static void chooseAppointment(ChoiceBox x) {
-        ObservableList<String> list = FXCollections.observableArrayList();
-        for (Appointment appointment : userRepository3.find()) {
-            list.add(appointment.getUsername() + " " + appointment.getLastName() + " " + appointment.getFirstName() + " " + appointment.getDate() + " " + appointment.getTime() + " " + appointment.getPhone() + " " + appointment.getValid());
-        }
-
-        x.setItems(list);
-    }
-
 
     //Objects.equals(newDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
     public static void modifyMedicamentation(String username, String med, String newDosage, String newDate, String treatmentComplete) throws NoEmptyField
@@ -236,7 +216,25 @@ public class UserService {
         }
     }
 
+    public static int addAppointment(String LastName, String FirstName, String phone, String username, String date, String time, String doctor) throws NoEmptyField
+    {
 
+        if(LastName.equals("") || FirstName.equals("") || phone.equals("") || username.equals("") || date.equals("") || time.equals("") || doctor.equals(""))throw new NoEmptyField();
+        else
+            userRepository3.insert(new Appointment(username, LastName, FirstName, phone, date, time, doctor, ""));
+        return 0;
+    }
+
+
+    //method that takes data from the appointment database and adds it to the choiceBox
+    public static void chooseAppointment(ChoiceBox x) {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        for (Appointment appointment : userRepository3.find()) {
+            list.add(appointment.getUsername() + " " + appointment.getLastName() + " " + appointment.getFirstName() + " " + appointment.getDate() + " " + appointment.getTime() + " " + appointment.getPhone() + " " + appointment.getValid());
+        }
+
+        x.setItems(list);
+    }
 
     public static void setAppointmentValidation(String username, String valid)
     {
