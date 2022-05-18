@@ -1,16 +1,55 @@
 package org.loose.fis.sre.controllers;
 
-import javafx.event.ActionEvent;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-
+import javafx.event.ActionEvent;
+import org.loose.fis.sre.exceptions.*;
+import org.loose.fis.sre.model.ProductSearch;
+import org.loose.fis.sre.services.UserService;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class AvailableDoctorsController {
+
+public class AvailableDoctorsController implements Initializable {
+
+    @FXML
+    private TextField searchTextField;
+    @FXML
+    private TableView<ProductSearch> productTableView;
+    @FXML
+    private TableColumn<ProductSearch, String> NameTableColumn;
+    @FXML
+    private TableColumn<ProductSearch, String> specialtyTableColumn;
+    @FXML
+    private TableColumn<ProductSearch, String> clinicTableColumn;
+    @FXML
+    private Button backButton;
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resource){
+
+        NameTableColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        specialtyTableColumn.setCellValueFactory(new PropertyValueFactory<>("specialty"));
+        clinicTableColumn.setCellValueFactory(new PropertyValueFactory<>("clinic"));
+
+        UserService.populateTableView(productTableView);
+
+    }
+
 
     private Stage stage;
     private Parent root;

@@ -1,12 +1,18 @@
 package org.loose.fis.sre.services;
 
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.loose.fis.sre.exceptions.*;
 import org.loose.fis.sre.model.Appointment;
+import org.loose.fis.sre.model.ProductSearch;
 import org.loose.fis.sre.model.User;
 import org.loose.fis.sre.model.Medicamentation;
 
@@ -15,6 +21,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.Objects;
 
 import static org.loose.fis.sre.services.FileSystemService.getPathToFile;
@@ -154,6 +161,25 @@ public class UserService {
             }
         }
         x.setItems(list);
+    }
+
+    //method that takes data from the database and adds it to the tableView
+    public static void populateTableView(TableView x){
+        ObservableList<ProductSearch> list = FXCollections.observableArrayList();
+        for(User user : userRepository.find())
+        {
+            if(Objects.equals("Medic", user.getRole())){
+                String name = user.getFirstName() + " " + user.getLastName();
+                String specialty = user.getSpecialty();
+                String clinic = user.getClinic_hospital();
+                list.add(new ProductSearch(name,specialty,clinic));
+            }
+        }
+
+        x.setItems(list);
+
+
+
     }
 
     //method that takes data from the appointment database and adds it to the choiceBox
