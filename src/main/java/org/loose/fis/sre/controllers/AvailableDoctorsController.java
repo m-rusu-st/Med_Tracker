@@ -46,7 +46,7 @@ public class AvailableDoctorsController implements Initializable {
         specialtyTableColumn.setCellValueFactory(new PropertyValueFactory<>("specialty"));
         clinicTableColumn.setCellValueFactory(new PropertyValueFactory<>("clinic"));
 
-        UserService.populateTableView(productTableView);
+        UserService.populateTableView(productTableView, searchTextField);
 
     }
 

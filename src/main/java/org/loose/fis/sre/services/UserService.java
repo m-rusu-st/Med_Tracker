@@ -164,7 +164,7 @@ public class UserService {
     }
 
     //method that takes data from the database and adds it to the tableView
-    public static void populateTableView(TableView x){
+    public static void populateTableView(TableView x, TextField y){
         ObservableList<ProductSearch> list = FXCollections.observableArrayList();
         for(User user : userRepository.find())
         {
@@ -178,7 +178,35 @@ public class UserService {
 
         x.setItems(list);
 
+        //PT search
+        FilteredList<ProductSearch> filteredData = new FilteredList<>(list, b->true);
+        y.textProperty().addListener((observable, oldValue,newValue) -> {
+            filteredData.setPredicate(ProductSearch -> {
 
+                //if no search value then display all records or whatever records it current have no changes
+                if(newValue.isEmpty() || newValue.isBlank() || newValue == null){
+                    return true;
+                }
+                String searchKeyword= newValue.toLowerCase();
+
+                if(ProductSearch.getName().toLowerCase().indexOf(searchKeyword) > -1){
+                    return true; //Means we found a match in Name
+                }else if(ProductSearch.getSpecialty().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true; //Means we found a match in specialty
+                }else if(ProductSearch.getClinic().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true; //Means we found a match in clinic
+                }else
+                    return false; //no match found
+
+            });
+        });
+
+        SortedList<ProductSearch> sortedData = new SortedList <>(filteredData);
+        //Bind sorted result with Table View
+        sortedData.comparatorProperty().bind(x.comparatorProperty());
+
+        //Apply filtered and sorted data to the Table View
+        x.setItems(sortedData);
 
     }
 
