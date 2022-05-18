@@ -20,18 +20,19 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Objects;
 
+//import static org.loose.fis.sre.services.FileSystemService.*;
 import static org.loose.fis.sre.services.FileSystemService.getPathToFile;
 import static org.loose.fis.sre.services.FileSystemService.getPathToFile2;
+import static org.loose.fis.sre.services.FileSystemService.getPathToFile3;
+
 
 public class UserService {
 
     private static ObjectRepository<User> userRepository;
     private static ObjectRepository<Medicamentation> userRepository2;
-
     private static ObjectRepository<Appointment> userRepository3;
 
     public static void initDatabase() {
@@ -53,22 +54,44 @@ public class UserService {
 
     public static void initDatabase3() {
         Nitrite database = Nitrite.builder()
-                .filePath(getPathToFile("MedTrackerAppointments.db").toFile())
+                .filePath(getPathToFile3("MedTrackerAppointments.db").toFile())
                 .openOrCreate("test", "test");
 
         userRepository3 = database.getRepository(Appointment.class);
     }
 
-    public static int addUser(String LastName, String FirstName, String phone, String address, String username, String password, String role) throws UsernameAlreadyExistsException, NoEmptyField {
+    private static String u;
+    public static int addUser(String LastName, String FirstName, String phone, String address, String username, String password, String role, String specialty, String clinic_hospital) throws UsernameAlreadyExistsException, NoEmptyField {
         checkUserDoesNotAlreadyExist(username);
         if(LastName.equals("") || FirstName.equals("") || phone.equals("") || address.equals("") || username.equals("") || password.equals("") || role.equals("")) throw new NoEmptyField();
 
-        userRepository.insert(new User(LastName, FirstName, phone, address, username, encodePassword(username, password), role));
+        userRepository.insert(new User(LastName, FirstName, phone, address, username, encodePassword(username, password), role, specialty, clinic_hospital));
 
-        if(role.equals("Pacient"))return 1;
-        else if(role.equals("Medic"))return 2;
+        if(role.equals("Pacient")){
+            return 1;
+        }
+        else if(role.equals("Medic")){
+            u = username;
+            return 2;
+        }
 
         return 0;
+    }
+
+    public static void addUser2(String specialty, String hospital) throws NoEmptyField{
+        for(User user : userRepository.find())
+        {
+            if(Objects.equals(u, user.getUsername()))
+            {
+                if(Objects.equals(specialty, "") || Objects.equals(hospital, "")) throw new NoEmptyField();
+                else{
+                     user.setSpecialty(specialty);
+                     user.setClinic_hospital(hospital);
+                     userRepository.update(user);
+                }
+
+            }
+        }
     }
 
 
@@ -83,15 +106,6 @@ public class UserService {
     public static void deleteMedicamentation(Medicamentation meds)
     {
         userRepository2.remove(meds);
-    }
-
-    public static int addAppointment(String username, String LastName, String FirstName, String phone, String date, String time, String valid) throws NoEmptyField{
-
-        if(username.equals("") || LastName.equals("") || FirstName.equals("") || phone.equals("") || phone.equals("") || date.equals("") || time.equals("")) throw new NoEmptyField();
-
-        userRepository3.insert(new Appointment(username, LastName, FirstName, phone, date, time, valid));
-
-        return 0;
     }
 
     private static void checkUserDoesNotAlreadyExist(String username) throws UsernameAlreadyExistsException {
@@ -163,6 +177,8 @@ public class UserService {
         x.setItems(list);
     }
 
+
+
     //method that takes data from the database and adds it to the tableView
     public static void populateTableView(TableView x, TextField y){
         ObservableList<ProductSearch> list = FXCollections.observableArrayList();
@@ -213,10 +229,26 @@ public class UserService {
     //method that takes data from the appointment database and adds it to the choiceBox
     public static void chooseAppointment(ChoiceBox x) {
         ObservableList<String> list = FXCollections.observableArrayList();
-        for (Appointment appointment : userRepository3.find()) {
-            list.add(appointment.getUsername() + " " + appointment.getLastName() + " " + appointment.getFirstName() + " " + appointment.getDate() + " " + appointment.getTime() + " " + appointment.getPhone() + " " + appointment.getValid());
-        }
+        int h1, h2, m1, m2;
+        for(h1=0; h1<=2; h1=h1+1)
+            for(h2=0; h2<=9; h2=h2+1)
+                for(m1=0; m1<=5; m1=m1+1)
+                    for(m2=0; m2<=9; m2=m2+10)
+                            if(h1==2 && h2>3) break;
+                            else
+                            list.add(h1 + "" + h2 + ":" + m1 + m2);
 
+        x.setItems(list);
+    }
+
+    public static void populateChoiceBox3(ChoiceBox x){
+        ObservableList<String> list = FXCollections.observableArrayList();
+        for(User user : userRepository.find())
+        {
+            if(Objects.equals("Medic", user.getRole())){
+                list.add(user.getUsername() + " " + user.getSpecialty());
+            }
+        }
         x.setItems(list);
     }
 
@@ -231,11 +263,8 @@ public class UserService {
                 if(Objects.equals(newDosage, "") || Objects.equals(treatmentComplete, "")) throw new NoEmptyField();
                 else{
                      medicamentation.setDosage(newDosage);
-                     //userRepository2.update(medicamentation);
                      medicamentation.setEndDate(newDate);
-                     //userRepository2.update(medicamentation);
                      medicamentation.setTreatmentComplete(treatmentComplete);
-                  //  System.out.println(newDosage + " " + treatmentComplete + " " + newDate);
                      userRepository2.update(medicamentation);
                 }
 
@@ -243,7 +272,32 @@ public class UserService {
         }
     }
 
+    public static int check(String cb1, LocalDate cb2) throws NoEmptyField{
+        if(Objects.equals(cb1, "") ||  (cb2 == null)) throw new NoEmptyField();
 
+        return 0;
+    }
+
+    public static int addAppointment(String LastName, String FirstName, String phone, String username, String date, String time, String doctor) throws NoEmptyField, AppointmentError {
+
+        if(LastName.equals("") || FirstName.equals("") || phone.equals("") || username.equals("") || date.equals("") || time.equals("") || doctor.equals(""))throw new NoEmptyField();
+        else if(!LastName.equals("") && !FirstName.equals("") && !phone.equals("") && !username.equals("") && !date.equals("") && !time.equals("") && !doctor.equals("") && (time.compareTo("08:00")<0 || time.compareTo("17:00")>0)) throw new AppointmentError();
+        else
+        userRepository3.insert(new Appointment(username, LastName, FirstName, phone, date, time, doctor, ""));
+        return 0;
+    }
+
+
+    //method that takes data from the appointment database and adds it to the choiceBox
+    public static void chooseAppointment(ChoiceBox x) {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        for (Appointment appointment : userRepository3.find()) {
+            if(appointment.getDoctor().equals(u))
+            list.add(appointment.getUsername() + " " + appointment.getLastName() + " " + appointment.getFirstName() + " " + appointment.getDate() + " " + appointment.getTime() + " " + appointment.getPhone() + " " + appointment.getValid());
+        }
+
+        x.setItems(list);
+    }
 
     public static void setAppointmentValidation(String username, String valid)
     {
@@ -252,6 +306,7 @@ public class UserService {
             if(Objects.equals(username, appointment.getUsername()))
             {
                 appointment.setValid(valid);
+                userRepository3.update(appointment);
             }
         }
     }

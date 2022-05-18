@@ -11,15 +11,17 @@ public class Appointment {
     private String phone;
     private String date;
     private String time;
+    private String doctor;
     private String valid;
 
-    public Appointment(String username, String LastName, String FirstName, String phone, String date, String time, String valid) {
+    public Appointment(String username, String LastName, String FirstName, String phone, String date, String time, String doctor, String valid) {
         this.username = username;
         this.LastName = LastName;
         this.FirstName = FirstName;
         this.phone = phone;
         this.date = date;
         this.time = time;
+        this.doctor = doctor;
         this.valid = valid;
     }
 
@@ -81,4 +83,13 @@ public class Appointment {
     public void setValid(String valid) {
         this.valid = valid;
     }
+
+    public String getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(String doctor) {
+        this.doctor = doctor;
+    }
+
 }

@@ -11,8 +11,10 @@ public class User {
     private String username;
     private String password;
     private String role;
+    private String specialty;
+    private String clinic_hospital;
 
-    public User(String LastName, String FirstName, String phone, String address, String username, String password, String role) {
+    public User(String LastName, String FirstName, String phone, String address, String username, String password, String role, String specialty, String clinic_hospital) {
         this.LastName = LastName;
         this.FirstName = FirstName;
         this.phone = phone;
@@ -20,6 +22,8 @@ public class User {
         this.username = username;
         this.password = password;
         this.role = role;
+        this.specialty = specialty;
+        this.clinic_hospital = clinic_hospital;
     }
 
     public User() {
@@ -77,6 +81,20 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getSpecialty() {
+        return specialty;
+    }
+
+    public void setSpecialty(String specialty) {this.specialty = specialty;}
+
+    public String getClinic_hospital() {
+        return clinic_hospital;
+    }
+
+    public void setClinic_hospital(String clinic_hospital) {
+        this.clinic_hospital = clinic_hospital;
     }
 
     @Override

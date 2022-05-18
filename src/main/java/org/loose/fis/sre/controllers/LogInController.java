@@ -40,7 +40,7 @@ public class LogInController{
 
             if(check == 1)
             {
-                Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Pacient.fxml"));
+                Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("MakeAnAppointment.fxml"));
                 stage = (Stage)((Node)event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
                 stage.setScene(scene);
