@@ -1,12 +1,18 @@
 package org.loose.fis.sre.services;
 
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.loose.fis.sre.exceptions.*;
 import org.loose.fis.sre.model.Appointment;
+import org.loose.fis.sre.model.ProductSearch;
 import org.loose.fis.sre.model.User;
 import org.loose.fis.sre.model.Medicamentation;
 
@@ -14,6 +20,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
+import java.util.Locale;
 import java.util.Objects;
 
 //import static org.loose.fis.sre.services.FileSystemService.*;
@@ -170,7 +177,57 @@ public class UserService {
         x.setItems(list);
     }
 
-    public static void populateChoiceBox2(ChoiceBox x){
+
+
+    //method that takes data from the database and adds it to the tableView
+    public static void populateTableView(TableView x, TextField y){
+        ObservableList<ProductSearch> list = FXCollections.observableArrayList();
+        for(User user : userRepository.find())
+        {
+            if(Objects.equals("Medic", user.getRole())){
+                String name = user.getFirstName() + " " + user.getLastName();
+                String specialty = user.getSpecialty();
+                String clinic = user.getClinic_hospital();
+                list.add(new ProductSearch(name,specialty,clinic));
+            }
+        }
+
+        x.setItems(list);
+
+        //PT search
+        FilteredList<ProductSearch> filteredData = new FilteredList<>(list, b->true);
+        y.textProperty().addListener((observable, oldValue,newValue) -> {
+            filteredData.setPredicate(ProductSearch -> {
+
+                //if no search value then display all records or whatever records it current have no changes
+                if(newValue.isEmpty() || newValue.isBlank() || newValue == null){
+                    return true;
+                }
+                String searchKeyword= newValue.toLowerCase();
+
+                if(ProductSearch.getName().toLowerCase().indexOf(searchKeyword) > -1){
+                    return true; //Means we found a match in Name
+                }else if(ProductSearch.getSpecialty().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true; //Means we found a match in specialty
+                }else if(ProductSearch.getClinic().toLowerCase().indexOf(searchKeyword) > -1) {
+                    return true; //Means we found a match in clinic
+                }else
+                    return false; //no match found
+
+            });
+        });
+
+        SortedList<ProductSearch> sortedData = new SortedList <>(filteredData);
+        //Bind sorted result with Table View
+        sortedData.comparatorProperty().bind(x.comparatorProperty());
+
+        //Apply filtered and sorted data to the Table View
+        x.setItems(sortedData);
+
+    }
+
+    //method that takes data from the appointment database and adds it to the choiceBox
+    public static void chooseAppointment(ChoiceBox x) {
         ObservableList<String> list = FXCollections.observableArrayList();
         int h1, h2, m1, m2;
         for(h1=0; h1<=2; h1=h1+1)
