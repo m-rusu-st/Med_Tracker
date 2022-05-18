@@ -14,7 +14,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 //import static org.loose.fis.sre.services.FileSystemService.*;
@@ -216,12 +215,18 @@ public class UserService {
         }
     }
 
-    public static int addAppointment(String LastName, String FirstName, String phone, String username, String date, String time, String doctor) throws NoEmptyField
-    {
+    public static int check(String cb1, LocalDate cb2) throws NoEmptyField{
+        if(Objects.equals(cb1, "") ||  (cb2 == null)) throw new NoEmptyField();
+
+        return 0;
+    }
+
+    public static int addAppointment(String LastName, String FirstName, String phone, String username, String date, String time, String doctor) throws NoEmptyField, AppointmentError {
 
         if(LastName.equals("") || FirstName.equals("") || phone.equals("") || username.equals("") || date.equals("") || time.equals("") || doctor.equals(""))throw new NoEmptyField();
+        else if(!LastName.equals("") && !FirstName.equals("") && !phone.equals("") && !username.equals("") && !date.equals("") && !time.equals("") && !doctor.equals("") && (time.compareTo("08:00")<0 || time.compareTo("17:00")>0)) throw new AppointmentError();
         else
-            userRepository3.insert(new Appointment(username, LastName, FirstName, phone, date, time, doctor, ""));
+        userRepository3.insert(new Appointment(username, LastName, FirstName, phone, date, time, doctor, ""));
         return 0;
     }
 
@@ -230,6 +235,7 @@ public class UserService {
     public static void chooseAppointment(ChoiceBox x) {
         ObservableList<String> list = FXCollections.observableArrayList();
         for (Appointment appointment : userRepository3.find()) {
+            if(appointment.getDoctor().equals(u))
             list.add(appointment.getUsername() + " " + appointment.getLastName() + " " + appointment.getFirstName() + " " + appointment.getDate() + " " + appointment.getTime() + " " + appointment.getPhone() + " " + appointment.getValid());
         }
 
