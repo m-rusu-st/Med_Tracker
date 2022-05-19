@@ -320,6 +320,30 @@ public class UserService {
         x.setItems(list);
     }
 
+    public static void populateTableView5(TableView x) {
+        ObservableList<DoctorsHistory> list = FXCollections.observableArrayList();
+
+        for(Appointment appointment : userRepository3.find()){
+            if(Objects.equals(p,appointment.getUsername())){
+                String doctorUsername = appointment.getDoctor();
+                String LastName="", FirstName="", clinic="", specialty="";
+
+                for(User user : userRepository.find()){
+                    if(Objects.equals(doctorUsername, user.getUsername())){
+                        LastName = user.getLastName();
+                        FirstName = user.getFirstName();
+                        clinic = user.getClinic_hospital();
+                        specialty = user.getSpecialty();
+                    }
+                }
+                DoctorsHistory doctor = new DoctorsHistory(LastName, FirstName, clinic, specialty);
+                if(!list.contains(doctor))
+                    list.add(new DoctorsHistory(LastName, FirstName, clinic, specialty));
+            }
+        }
+        x.setItems(list);
+    }
+
     //Objects.equals(newDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
     public static void modifyMedicamentation(String username, String med, String newDosage, String newDate, String treatmentComplete) throws NoEmptyField
     {
