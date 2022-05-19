@@ -84,7 +84,7 @@ public class PatientController {
 
     public void patientLogsOut(ActionEvent event) throws IOException
     {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("LogOut.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("LogOutPacient.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
