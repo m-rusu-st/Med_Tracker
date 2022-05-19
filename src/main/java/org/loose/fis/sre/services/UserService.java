@@ -136,6 +136,7 @@ public class UserService {
         return md;
     }
 
+    private static String m;
     //method that checks credentials in Log In
     public static int checkCredentials(String username, String password) throws WrongUsernameException, WrongPasswordException, EmptyUsernameFieldException, EmptyPasswordFieldException, EmptyUsernamePasswordFieldException{
         int v_username = 0, v_password = 0; // initial the username and password does not exist in the database
@@ -153,7 +154,7 @@ public class UserService {
                     v_password = 1; // password exists
 
                     if (user.getRole().equals("Pacient")) return 1;
-                    else if (user.getRole().equals("Medic")) return 2;
+                    else if (user.getRole().equals("Medic")){ m = user.getUsername();  return 2; }
                 }
             }
         }
@@ -177,6 +178,31 @@ public class UserService {
         x.setItems(list);
     }
 
+    //method that takes data from the appointment database and adds it to the choiceBox
+    public static void populateChoiceBox2(ChoiceBox x) {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        int h1, h2, m1, m2;
+        for(h1=0; h1<=2; h1=h1+1)
+            for(h2=0; h2<=9; h2=h2+1)
+                for(m1=0; m1<=5; m1=m1+1)
+                    for(m2=0; m2<=9; m2=m2+10)
+                        if(h1==2 && h2>3) break;
+                        else
+                            list.add(h1 + "" + h2 + ":" + m1 + m2);
+
+        x.setItems(list);
+    }
+
+    public static void populateChoiceBox3(ChoiceBox x){
+        ObservableList<String> list = FXCollections.observableArrayList();
+        for(User user : userRepository.find())
+        {
+            if(Objects.equals("Medic", user.getRole())){
+                list.add(user.getUsername() + " " + user.getSpecialty());
+            }
+        }
+        x.setItems(list);
+    }
 
 
     //method that takes data from the database and adds it to the tableView
@@ -226,33 +252,6 @@ public class UserService {
 
     }
 
-    //method that takes data from the appointment database and adds it to the choiceBox
-    public static void chooseAppointment(ChoiceBox x) {
-        ObservableList<String> list = FXCollections.observableArrayList();
-        int h1, h2, m1, m2;
-        for(h1=0; h1<=2; h1=h1+1)
-            for(h2=0; h2<=9; h2=h2+1)
-                for(m1=0; m1<=5; m1=m1+1)
-                    for(m2=0; m2<=9; m2=m2+10)
-                            if(h1==2 && h2>3) break;
-                            else
-                            list.add(h1 + "" + h2 + ":" + m1 + m2);
-
-        x.setItems(list);
-    }
-
-    public static void populateChoiceBox3(ChoiceBox x){
-        ObservableList<String> list = FXCollections.observableArrayList();
-        for(User user : userRepository.find())
-        {
-            if(Objects.equals("Medic", user.getRole())){
-                list.add(user.getUsername() + " " + user.getSpecialty());
-            }
-        }
-        x.setItems(list);
-    }
-
-
     //Objects.equals(newDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
     public static void modifyMedicamentation(String username, String med, String newDosage, String newDate, String treatmentComplete) throws NoEmptyField
     {
@@ -278,6 +277,12 @@ public class UserService {
         return 0;
     }
 
+    public static int check2(String cb1) throws NoEmptyField{
+        if(Objects.equals(cb1, "")) throw new NoEmptyField();
+
+        return 0;
+    }
+
     public static int addAppointment(String LastName, String FirstName, String phone, String username, String date, String time, String doctor) throws NoEmptyField, AppointmentError {
 
         if(LastName.equals("") || FirstName.equals("") || phone.equals("") || username.equals("") || date.equals("") || time.equals("") || doctor.equals(""))throw new NoEmptyField();
@@ -292,7 +297,7 @@ public class UserService {
     public static void chooseAppointment(ChoiceBox x) {
         ObservableList<String> list = FXCollections.observableArrayList();
         for (Appointment appointment : userRepository3.find()) {
-            if(appointment.getDoctor().equals(u))
+            if(appointment.getDoctor().equals(m))
             list.add(appointment.getUsername() + " " + appointment.getLastName() + " " + appointment.getFirstName() + " " + appointment.getDate() + " " + appointment.getTime() + " " + appointment.getPhone() + " " + appointment.getValid());
         }
 

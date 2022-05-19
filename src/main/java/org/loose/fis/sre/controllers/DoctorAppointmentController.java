@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.loose.fis.sre.exceptions.NoEmptyField;
 import org.loose.fis.sre.model.Appointment;
 import org.loose.fis.sre.services.UserService;
 
@@ -23,21 +24,32 @@ public class DoctorAppointmentController {
     private Button saveButton;
     @FXML
     private Button back;
+    @FXML
+    private Label emptyfield;
 
     private Stage stage;
     private Parent root;
     private Scene scene;
 
-    public void initialize()
-    {
-        UserService.chooseAppointment(selectAppointment);
-        validate.getItems().addAll("Yes!", "No!");
+    public void initialize() throws NoEmptyField {
+
+            UserService.chooseAppointment(selectAppointment);
+            validate.getItems().addAll("Yes!", "No!");
 
     }
 
-    public void saveInfo(ActionEvent event) throws IOException
+    public void saveInfo(ActionEvent event) throws IOException, NoEmptyField
     {
-       UserService.setAppointmentValidation((String) selectAppointment.getValue(), (String) validate.getValue());
+
+        try {
+            UserService.check2(selectAppointment.getValue());
+            String[] param = ((String) selectAppointment.getValue()).split(" ");
+
+            UserService.setAppointmentValidation(param[0], (String) validate.getValue());
+
+        }catch(NoEmptyField e){
+            emptyfield.setText(e.getMessage());
+        }
     }
 
     public void goBack(ActionEvent event) throws IOException{
