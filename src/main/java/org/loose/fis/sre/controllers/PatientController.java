@@ -43,7 +43,7 @@ public class PatientController {
 
     public void userMakesAnAppointment(ActionEvent event) throws IOException
     {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Appointment.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("MakeAnAppointment.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
