@@ -5,6 +5,8 @@ import org.dizitart.no2.objects.Id;
 public class Appointment {
 
     @Id
+    private String codUnic;
+
     private String username;
     private String LastName;
     private String FirstName;
@@ -14,6 +16,7 @@ public class Appointment {
     private String doctor;
     private String valid;
 
+    public static int contor = 0;
     public Appointment(String username, String LastName, String FirstName, String phone, String date, String time, String doctor, String valid) {
         this.username = username;
         this.LastName = LastName;
@@ -23,6 +26,9 @@ public class Appointment {
         this.time = time;
         this.doctor = doctor;
         this.valid = valid;
+
+        contor = contor + 1;
+        codUnic = username + String.valueOf(contor);
     }
 
     public Appointment() {

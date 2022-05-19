@@ -273,6 +273,7 @@ public class UserService {
         x.setItems(list);
     }
 
+
     //Objects.equals(newDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
     public static void modifyMedicamentation(String username, String med, String newDosage, String newDate, String treatmentComplete) throws NoEmptyField
     {
@@ -334,5 +335,4 @@ public class UserService {
             }
         }
     }
-
 }
