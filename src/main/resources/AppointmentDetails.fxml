@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="698.0" prefWidth="498.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.loose.fis.sre.controllers.AppointmentDetailsController">
+    <top>
+        <AnchorPane prefHeight="138.0" prefWidth="498.0" style="-fx-background-color: #6495ED;" BorderPane.alignment="CENTER">
+            <children>
+                <ImageView fitHeight="79.0" fitWidth="86.0" layoutX="7.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@Images/SeekPng.com_medical-symbol-png_623997.png" />
+                    </image>
+                </ImageView>
+                <Label layoutX="73.0" layoutY="60.0" text="MED  TRACKER" textFill="WHITE">
+                    <font>
+                        <Font name="Impact" size="25.0" />
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+    </top>
+    <bottom>
+        <AnchorPane prefHeight="569.0" prefWidth="502.0" BorderPane.alignment="CENTER">
+            <children>
+                <TableView fx:id="tableView" layoutY="23.0" prefHeight="534.0" prefWidth="500.0">
+                    <columns>
+                        <TableColumn fx:id="NameTableColumn" prefWidth="103.0" text="Name" />
+                        <TableColumn fx:id="HourTableColumn" minWidth="2.0" prefWidth="63.0" text="Hour" />
+                        <TableColumn fx:id="DoctorLocationTableColumn" prefWidth="238.0" text="Doctor and location" />
+                  <TableColumn fx:id="ValidationTableColumn" prefWidth="95.0" text="Validation" />
+                    </columns>
+                </TableView>
+                <ImageView fitHeight="35.0" fitWidth="43.0" layoutX="467.0" layoutY="554.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@Images/icons8-logout-rounded-left-48.png" />
+                    </image>
+                </ImageView>
+                <Button fx:id="backButton" layoutX="465.0" layoutY="557.0" mnemonicParsing="false" onAction="#userGoesToPreviousPage" prefHeight="32.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-text-fill: transparent;" text="Button" />
+            </children>
+        </AnchorPane>
+    </bottom>
+</BorderPane>
