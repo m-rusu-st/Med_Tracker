@@ -26,6 +26,8 @@ public class PatientController {
     @FXML
     private Button doctorHistoryButton;
     @FXML
+    private Button appoimtmentDetailsButton;
+    @FXML
     private Button logOutButton;
 
     private Stage stage;
@@ -70,6 +72,15 @@ public class PatientController {
         stage.centerOnScreen(); //interface will appear in the center of the screen
         stage.show();
     }
+    public void seeAppointmentDetails(ActionEvent event) throws IOException
+    {
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("AppointmentDetails.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.centerOnScreen(); //interface will appear in the center of the screen
+        stage.show();
+    }
 
     public void patientLogsOut(ActionEvent event) throws IOException
     {
@@ -80,6 +91,9 @@ public class PatientController {
         stage.centerOnScreen(); //interface will appear in the center of the screen
         stage.show();
     }
+
+
+
 
 
 }

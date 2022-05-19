@@ -281,7 +281,8 @@ public class UserService {
                 String hour = appointment.getTime();
                 String date = appointment.getDate();
                 String valid = "";
-                if(Objects.equals(appointment.getValid(), "Yes!")) valid = "Accepted!";
+                if(Objects.equals((String)appointment.getValid(), "Yes!")) valid = "Accepted!";
+                else if(Objects.equals((String)appointment.getValid(), "")) valid ="Processing";
                 else valid = "Rejected";
                 String usernameDoctor = appointment.getDoctor();
                 String doctorLocation = "";
@@ -290,7 +291,7 @@ public class UserService {
                         doctorLocation = user.getFirstName() + " " + user.getLastName() + ", " + user.getClinic_hospital();
                 }
 
-                list.add(new AppointmentDetails(name,hour,date, valid,doctorLocation));
+                list.add(new AppointmentDetails(name,hour,date,doctorLocation,valid));
             }
         }
         x.setItems(list);
