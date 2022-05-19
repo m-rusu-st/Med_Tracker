@@ -273,6 +273,7 @@ public class UserService {
         x.setItems(list);
     }
 
+
     public static void populateTableView4(TableView x) {
         ObservableList<PatientsHistory> list = FXCollections.observableArrayList();
 
@@ -289,6 +290,31 @@ public class UserService {
                     }
                 }
                 list.add(new PatientsHistory(LastName, FirstName, phone, meds));
+            }
+         }
+          x.setItems(list);
+    }
+          
+    public static void populateTableView3(TableView x){
+        ObservableList<AppointmentDetails> list = FXCollections.observableArrayList();
+        for(Appointment appointment : userRepository3.find()) {
+            if (Objects.equals(p, appointment.getUsername())) {
+                String name = appointment.getFirstName() + " " + appointment.getLastName();
+                String hour = appointment.getTime();
+                String date = appointment.getDate();
+                String valid = "";
+                if(Objects.equals((String)appointment.getValid(), "Yes!")) valid = "Accepted!";
+                else if(Objects.equals((String)appointment.getValid(), "")) valid ="Processing";
+                else valid = "Rejected";
+                String usernameDoctor = appointment.getDoctor();
+                String doctorLocation = "";
+                for (User user : userRepository.find()) {
+                    if (Objects.equals(usernameDoctor, user.getUsername()))
+                        doctorLocation = user.getFirstName() + " " + user.getLastName() + ", " + user.getClinic_hospital();
+                }
+
+                list.add(new AppointmentDetails(name,hour,date,doctorLocation,valid));
+
             }
         }
         x.setItems(list);
