@@ -11,10 +11,7 @@ import javafx.scene.control.TextField;
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.loose.fis.sre.exceptions.*;
-import org.loose.fis.sre.model.Appointment;
-import org.loose.fis.sre.model.ProductSearch;
-import org.loose.fis.sre.model.User;
-import org.loose.fis.sre.model.Medicamentation;
+import org.loose.fis.sre.model.*;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -136,7 +133,7 @@ public class UserService {
         return md;
     }
 
-    private static String m;
+    private static String m,p;
     //method that checks credentials in Log In
     public static int checkCredentials(String username, String password) throws WrongUsernameException, WrongPasswordException, EmptyUsernameFieldException, EmptyPasswordFieldException, EmptyUsernamePasswordFieldException{
         int v_username = 0, v_password = 0; // initial the username and password does not exist in the database
@@ -153,7 +150,7 @@ public class UserService {
                 if(Objects.equals(encryptedPassword, user.getPassword())){
                     v_password = 1; // password exists
 
-                    if (user.getRole().equals("Pacient")) return 1;
+                    if (user.getRole().equals("Pacient")) { p = user.getUsername(); return 1;}
                     else if (user.getRole().equals("Medic")){ m = user.getUsername();  return 2; }
                 }
             }
@@ -250,6 +247,19 @@ public class UserService {
         //Apply filtered and sorted data to the Table View
         x.setItems(sortedData);
 
+    }
+
+    public static void populateTableView2(TableView x){
+        ObservableList<PrescribedMeds> list = FXCollections.observableArrayList();
+        for(Medicamentation medicamentation : userRepository2.find()){
+            if(Objects.equals(p,medicamentation.getUsername())){
+                String medicine = medicamentation.getMedicamentation();
+                String dosage = medicamentation.getDosage();
+                String treatmentDuration = medicamentation.getEndDate();
+                list.add(new PrescribedMeds(medicine,dosage,treatmentDuration));
+            }
+        }
+        x.setItems(list);
     }
 
     //Objects.equals(newDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))

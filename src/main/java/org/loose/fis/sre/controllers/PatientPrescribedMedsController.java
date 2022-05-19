@@ -37,7 +37,11 @@ public class PatientPrescribedMedsController implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resource){
+        MedicinesTableColumn.setCellValueFactory(new PropertyValueFactory<>("medicine"));
+        DosageTableColumn.setCellValueFactory(new PropertyValueFactory<>("dosage"));
+        TreatmentDurationTableColumn.setCellValueFactory(new PropertyValueFactory<>("treatmentDuration"));
 
+        UserService.populateTableView2(tableView);
     }
 
     private Stage stage;
