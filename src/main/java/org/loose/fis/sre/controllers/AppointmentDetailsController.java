@@ -32,6 +32,8 @@ public class AppointmentDetailsController implements Initializable{
     @FXML
     private TableColumn HourTableColumn;
     @FXML
+    private TableColumn DateTableColumn;
+    @FXML
     private TableColumn DoctorLocationTableColumn;
     @FXML
     private TableColumn ValidationTableColumn;
@@ -42,6 +44,13 @@ public class AppointmentDetailsController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resource){
 
+        NameTableColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        HourTableColumn.setCellValueFactory(new PropertyValueFactory<>("hour"));
+        DateTableColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        DoctorLocationTableColumn.setCellValueFactory(new PropertyValueFactory<>("doctorAndLocation"));
+        ValidationTableColumn.setCellValueFactory(new PropertyValueFactory<>("valid"));
+
+        UserService.populateTableView3(tableView);
     }
 
     private Stage stage;
