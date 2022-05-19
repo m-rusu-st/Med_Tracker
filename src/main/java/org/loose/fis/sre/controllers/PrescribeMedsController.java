@@ -48,13 +48,15 @@ public class PrescribeMedsController {
 
     }
 
-    public void doctorSavesChanges(ActionEvent event) throws IOException
+    public void doctorSavesChanges(ActionEvent event) throws EmptyFieldsDoctorException, NoEmptyField
     {
         try{
-
+            UserService.check(patientsList.getValue(), datePicker.getValue());
             UserService.addMedicamentation((String) patientsList.getValue(), addMedicineField.getText(), dosageField.getText(), datePicker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), (String)treatmentChoiceBox.getValue());
 
         }catch(EmptyFieldsDoctorException e){
+            wrongField.setText(e.getMessage());
+        }catch(NoEmptyField e){
             wrongField.setText(e.getMessage());
         }
 

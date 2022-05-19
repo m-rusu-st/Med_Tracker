@@ -7,18 +7,23 @@ import java.time.LocalDate;
 
 public class Medicamentation {
     @Id
+    String codUnic;
+
     String username;
     String medicamentation;
     String dosage;
     String endDate;
     String treatmentComplete;
 
+    public static int contor = 0;
     public Medicamentation(String username, String medicamentation, String dosage, String endDate, String treatmentComplete){
         this.username = username;
         this.medicamentation = medicamentation;
         this.dosage = dosage;
         this.endDate = endDate;
         this.treatmentComplete = treatmentComplete;
+        contor = contor + 1;
+        codUnic = username + String.valueOf(contor);
     }
 
     public Medicamentation() {

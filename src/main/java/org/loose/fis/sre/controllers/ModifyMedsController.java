@@ -46,15 +46,23 @@ public class ModifyMedsController {
 
     }
 
-    public void doctorDeletesMed(ActionEvent e) throws IOException
+    public void doctorDeletesMed(ActionEvent e) throws NoEmptyField, NoMedicineException
     {
-         Medicamentation medicine = new Medicamentation((String)patientsList.getValue(), meds.getText(), dosageTextField.getText(), datePicker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), (String)treatmentChoiceBox.getValue());
-         UserService.deleteMedicamentation(medicine);
+        try {
+            UserService.check(patientsList.getValue(), datePicker.getValue());
+            Medicamentation medicine = new Medicamentation((String) patientsList.getValue(), meds.getText(), dosageTextField.getText(), datePicker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), (String) treatmentChoiceBox.getValue());
+            UserService.deleteMedicamentation(medicine);
+        }catch(NoEmptyField event){
+            wrongField.setText(event.getMessage());
+        }catch(NoMedicineException event){
+            wrongField.setText(event.getMessage());
+        }
     }
 
     public void doctorSavesChanges(ActionEvent e) throws IOException, NoEmptyField
     {
         try{
+            UserService.check(patientsList.getValue(), datePicker.getValue());
             UserService.modifyMedicamentation((String)patientsList.getValue(), meds.getText(), dosageTextField.getText(), datePicker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), (String)treatmentChoiceBox.getValue());
         }catch(NoEmptyField event){
             wrongField.setText(event.getMessage());

@@ -11,10 +11,7 @@ import javafx.scene.control.TextField;
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.loose.fis.sre.exceptions.*;
-import org.loose.fis.sre.model.Appointment;
-import org.loose.fis.sre.model.ProductSearch;
-import org.loose.fis.sre.model.User;
-import org.loose.fis.sre.model.Medicamentation;
+import org.loose.fis.sre.model.*;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -98,14 +95,25 @@ public class UserService {
     public static int addMedicamentation(String username, String medicamentation, String dosage, String date, String treatmentComplete) throws EmptyFieldsDoctorException {
 
         if(medicamentation.equals("") || dosage.equals("") || date.equals("") || treatmentComplete.equals(""))throw new EmptyFieldsDoctorException();
-        userRepository2.insert(new Medicamentation(username, medicamentation, dosage, date, treatmentComplete));
+        else userRepository2.insert(new Medicamentation(username, medicamentation, dosage, date, treatmentComplete));
 
         return 0;
     }
 
-    public static void deleteMedicamentation(Medicamentation meds)
+    public static void deleteMedicamentation(Medicamentation meds) throws NoEmptyField, NoMedicineException
     {
-        userRepository2.remove(meds);
+        int ok = 0;
+        if(Objects.equals(meds.getMedicamentation(),"") || Objects.equals(meds.getDosage(),"") || Objects.equals(meds.getTreatmentComplete(),"")) throw new NoEmptyField();
+        else {
+            for (Medicamentation medicamentation : userRepository2.find()) {
+
+                if (Objects.equals(meds.getMedicamentation(), medicamentation.getMedicamentation()) && Objects.equals(meds.getUsername(), medicamentation.getUsername())){
+                    userRepository2.remove(meds);
+                    ok = ok + 1;
+                }
+            }
+            if(ok == 0) throw new NoMedicineException();
+        }
     }
 
     private static void checkUserDoesNotAlreadyExist(String username) throws UsernameAlreadyExistsException {
@@ -136,7 +144,7 @@ public class UserService {
         return md;
     }
 
-    private static String m;
+    private static String m,p;
     //method that checks credentials in Log In
     public static int checkCredentials(String username, String password) throws WrongUsernameException, WrongPasswordException, EmptyUsernameFieldException, EmptyPasswordFieldException, EmptyUsernamePasswordFieldException{
         int v_username = 0, v_password = 0; // initial the username and password does not exist in the database
@@ -153,7 +161,7 @@ public class UserService {
                 if(Objects.equals(encryptedPassword, user.getPassword())){
                     v_password = 1; // password exists
 
-                    if (user.getRole().equals("Pacient")) return 1;
+                    if (user.getRole().equals("Pacient")) { p = user.getUsername(); return 1;}
                     else if (user.getRole().equals("Medic")){ m = user.getUsername();  return 2; }
                 }
             }
@@ -252,23 +260,34 @@ public class UserService {
 
     }
 
+    public static void populateTableView2(TableView x){
+        ObservableList<PrescribedMeds> list = FXCollections.observableArrayList();
+        for(Medicamentation medicamentation : userRepository2.find()){
+            if(Objects.equals(p,medicamentation.getUsername())){
+                String medicine = medicamentation.getMedicamentation();
+                String dosage = medicamentation.getDosage();
+                String treatmentDuration = medicamentation.getEndDate();
+                list.add(new PrescribedMeds(medicine,dosage,treatmentDuration));
+            }
+        }
+        x.setItems(list);
+    }
+
     //Objects.equals(newDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
     public static void modifyMedicamentation(String username, String med, String newDosage, String newDate, String treatmentComplete) throws NoEmptyField
     {
-        for(Medicamentation medicamentation : userRepository2.find())
-        {
-            if(Objects.equals(username, medicamentation.getUsername()) && Objects.equals(med, medicamentation.getMedicamentation()))
+        if(Objects.equals(username,"") || Objects.equals(med,"") || Objects.equals(newDosage,"") || Objects.equals(newDate,"") || Objects.equals(treatmentComplete,"")) throw new NoEmptyField();
+        else
+            for(Medicamentation medicamentation : userRepository2.find())
             {
-                if(Objects.equals(newDosage, "") || Objects.equals(treatmentComplete, "")) throw new NoEmptyField();
-                else{
-                     medicamentation.setDosage(newDosage);
-                     medicamentation.setEndDate(newDate);
-                     medicamentation.setTreatmentComplete(treatmentComplete);
-                     userRepository2.update(medicamentation);
+                if(Objects.equals(username, medicamentation.getUsername()) && Objects.equals(med, medicamentation.getMedicamentation()))
+                {
+                        medicamentation.setDosage(newDosage);
+                        medicamentation.setEndDate(newDate);
+                        medicamentation.setTreatmentComplete(treatmentComplete);
+                        userRepository2.update(medicamentation);
                 }
-
             }
-        }
     }
 
     public static int check(String cb1, LocalDate cb2) throws NoEmptyField{
