@@ -405,4 +405,28 @@ public class UserService {
             }
         }
     }
+
+    public static int nrElementsApp()
+    {
+        int nr = 0;
+        for(Appointment appointment : userRepository3.find())
+        {
+            nr = nr + 1;
+        }
+
+        return nr;
+    }
+
+    public static int nrElementsMeds()
+    {
+        int nr = 0;
+        for(Medicamentation medicamentation : userRepository2.find())
+        {
+            nr = nr + 1;
+        }
+
+        return nr;
+    }
+
+
 }

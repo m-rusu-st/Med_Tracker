@@ -1,6 +1,7 @@
 package org.loose.fis.sre.model;
 
 import org.dizitart.no2.objects.Id;
+import org.loose.fis.sre.services.UserService;
 
 import java.time.LocalDate;
 
@@ -15,15 +16,16 @@ public class Medicamentation {
     String endDate;
     String treatmentComplete;
 
-    public static int contor = 0;
+    public static int contor;
     public Medicamentation(String username, String medicamentation, String dosage, String endDate, String treatmentComplete){
         this.username = username;
         this.medicamentation = medicamentation;
         this.dosage = dosage;
         this.endDate = endDate;
         this.treatmentComplete = treatmentComplete;
-        contor = contor + 1;
-        codUnic = username + String.valueOf(contor);
+
+        contor = UserService.nrElementsMeds() + 1;
+        codUnic = String.valueOf(contor);
     }
 
     public Medicamentation() {

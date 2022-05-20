@@ -32,10 +32,10 @@
             <children>
                 <TableView fx:id="tableView" layoutY="1.0" prefHeight="556.0" prefWidth="500.0">
                     <columns>
-                        <TableColumn fx:id="LastNameTableColumn" prefWidth="116.0" text="Last Name" />
-                        <TableColumn fx:id="FirstNameTableColumn" minWidth="2.0" prefWidth="123.0" text="FirstName" />
-                        <TableColumn fx:id="PhoneTableColumn" prefWidth="113.0" text="Phone" />
-                  <TableColumn fx:id="MedsTableColumn" prefWidth="167.0" text="Meds" />
+                        <TableColumn fx:id="LastNameTableColumn" prefWidth="104.0" text="Last Name" />
+                        <TableColumn fx:id="FirstNameTableColumn" minWidth="2.0" prefWidth="105.0" text="FirstName" />
+                        <TableColumn fx:id="PhoneTableColumn" prefWidth="110.0" text="Phone" />
+                  <TableColumn fx:id="MedsTableColumn" prefWidth="200.0" text="Meds" />
                     </columns>
                 </TableView>
                 <ImageView fitHeight="35.0" fitWidth="43.0" layoutX="467.0" layoutY="554.0" pickOnBounds="true" preserveRatio="true">
