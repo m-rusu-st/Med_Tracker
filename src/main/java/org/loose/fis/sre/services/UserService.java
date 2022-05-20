@@ -19,6 +19,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -389,7 +390,7 @@ public class UserService {
     public static int addAppointment(String LastName, String FirstName, String phone, String username, String date, DayOfWeek day, String time, String doctor) throws NoEmptyField, AppointmentError {
 
         if(LastName.equals("") || FirstName.equals("") || phone.equals("") || username.equals("") || date.equals("") || time.equals("") || doctor.equals(""))throw new NoEmptyField();
-        else if(time.compareTo("08:00")<0 || time.compareTo("17:00")>0 || day.compareTo(DayOfWeek.FRIDAY)>0 ) throw new AppointmentError();
+        else if(time.compareTo("08:00")<0 || time.compareTo("17:00")>0 || day.compareTo(DayOfWeek.FRIDAY)>0 || date.compareTo(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))<0) throw new AppointmentError();
         else
         userRepository3.insert(new Appointment(username, LastName, FirstName, phone, date, time, doctor, ""));
         return 0;

@@ -44,7 +44,7 @@ public class PrescribeMedsController {
     public void initialize()
     {
         UserService.populateChoiceBox(patientsList);
-        treatmentChoiceBox.getItems().addAll("Da!", "Nu!");
+        treatmentChoiceBox.getItems().addAll("Yes!", "No!");
 
     }
 
