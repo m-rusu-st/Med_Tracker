@@ -34,6 +34,14 @@ public class Appointment {
     public Appointment() {
     }
 
+    public String getCodUnic() {
+        return codUnic;
+    }
+
+    public void setCodUnic(String codUnic) {
+        this.codUnic = codUnic;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -46,16 +54,16 @@ public class Appointment {
         return LastName;
     }
 
-    public void setLastName(String LastName) {
-        this.LastName = LastName;
+    public void setLastName(String lastName) {
+        LastName = lastName;
     }
 
     public String getFirstName() {
         return FirstName;
     }
 
-    public void setFirstName(String FirstName) {
-        this.FirstName = FirstName;
+    public void setFirstName(String firstName) {
+        FirstName = firstName;
     }
 
     public String getPhone() {
@@ -78,16 +86,8 @@ public class Appointment {
         return time;
     }
 
-    public void setTime(String phone) {
+    public void setTime(String time) {
         this.time = time;
-    }
-
-    public String getValid() {
-        return valid;
-    }
-
-    public void setValid(String valid) {
-        this.valid = valid;
     }
 
     public String getDoctor() {
@@ -98,4 +98,11 @@ public class Appointment {
         this.doctor = doctor;
     }
 
+    public String getValid() {
+        return valid;
+    }
+
+    public void setValid(String valid) {
+        this.valid = valid;
+    }
 }
