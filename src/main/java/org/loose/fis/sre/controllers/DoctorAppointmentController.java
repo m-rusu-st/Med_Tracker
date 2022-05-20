@@ -45,7 +45,7 @@ public class DoctorAppointmentController {
             UserService.check2(selectAppointment.getValue());
             String[] param = ((String) selectAppointment.getValue()).split(" ");
 
-            UserService.setAppointmentValidation(param[0], (String) validate.getValue());
+            UserService.setAppointmentValidation(param[0], param[1], param[2], param[3], (String) validate.getValue());
 
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Medic.fxml"));
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
