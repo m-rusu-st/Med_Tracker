@@ -47,6 +47,13 @@ public class DoctorAppointmentController {
 
             UserService.setAppointmentValidation(param[0], (String) validate.getValue());
 
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Medic.fxml"));
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.show();
+
         }catch(NoEmptyField e){
             emptyfield.setText(e.getMessage());
         }

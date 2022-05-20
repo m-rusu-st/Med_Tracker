@@ -286,7 +286,7 @@ public class UserService {
                 String meds = "";
                 for(Medicamentation medicamentation : userRepository2.find()){
                     if(Objects.equals(patient, medicamentation.getUsername())){
-                        meds = meds + medicamentation.getMedicamentation() + " ";
+                        meds = meds + medicamentation.getMedicamentation() + " " + medicamentation.getDosage() + " ";
                     }
                 }
                 list.add(new PatientsHistory(LastName, FirstName, phone, meds));
@@ -388,7 +388,7 @@ public class UserService {
         ObservableList<String> list = FXCollections.observableArrayList();
         for (Appointment appointment : userRepository3.find()) {
             if(appointment.getDoctor().equals(m))
-            list.add(appointment.getUsername() + " " + appointment.getLastName() + " " + appointment.getFirstName() + " " + appointment.getDate() + " " + appointment.getTime() + " " + appointment.getPhone() + " " + appointment.getValid());
+            list.add(appointment.getLastName() + " " + appointment.getFirstName() + " " + appointment.getDate() + " " + appointment.getTime() + " " + appointment.getPhone() + " " + appointment.getValid());
         }
 
         x.setItems(list);

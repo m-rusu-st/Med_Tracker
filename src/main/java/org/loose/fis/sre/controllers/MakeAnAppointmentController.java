@@ -56,6 +56,13 @@ public class MakeAnAppointmentController {
           String[]  param = ((String) doctorPicker.getValue()).split(" ");
           UserService.addAppointment(LastNameField.getText(), FirstNameField.getText(), PhoneField.getText(), UsernameField.getText(), datePicker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), (String) timePicker.getValue(), param[0]);
 
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Pacient.fxml"));
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.show();
+
        }catch(NoEmptyField e){
             emptyField1.setText(e.getMessage());
         }catch (AppointmentError e){
