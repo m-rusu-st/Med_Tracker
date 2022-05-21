@@ -6,9 +6,15 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
 import org.assertj.core.api.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.loose.fis.sre.exceptions.NoEmptyField;
+import org.loose.fis.sre.exceptions.UsernameAlreadyExistsException;
 import org.loose.fis.sre.services.FileSystemService;
 import org.loose.fis.sre.services.UserService;
 import org.testfx.api.FxRobot;
@@ -33,17 +39,21 @@ class RegistrationControllerTest {
     public static final String SPECIALTY = "Cardiology";
     public static final String HOSPITAL = "Judetean";
 
-    @BeforeEach
+    /*@BeforeEach
     void setUp() throws Exception {
         FileSystemService.APPLICATION_FOLDER = ".registration-example";
         FileUtils.cleanDirectory(FileSystemService.getApplicationHomeFolder().toFile());
         UserService.initDatabase();
-        UserService.initDatabase2();
-        UserService.initDatabase3();
-    }
+    }*/
 
     @Start
     void start(Stage primaryStage) throws Exception {
+        FileSystemService.APPLICATION_FOLDER = ".registration-example";
+        FileUtils.cleanDirectory(FileSystemService.getApplicationHomeFolder().toFile());
+        UserService.initDatabase();
+        UserService.addUser("Pop", "George", "0741258639", "Linistei 21", "PopGeorge", "popgeorge", "Medic", "Oncology", "Clinic");
+
+
         root = FXMLLoader.load(getClass().getClassLoader().getResource("register.fxml"));
         primaryStage.setTitle("Med Tracker");
         primaryStage.setScene(new Scene(root, 600, 500));
@@ -51,7 +61,8 @@ class RegistrationControllerTest {
     }
 
     @Test
-    void testRegistration(FxRobot robot) throws IOException {
+    void testRegistration(FxRobot robot) throws IOException, UsernameAlreadyExistsException, NoEmptyField {
+
         robot.clickOn("#LastNameField");
         robot.write(LASTNAME);
         robot.clickOn("#FirstNameField");
@@ -90,5 +101,26 @@ class RegistrationControllerTest {
 
         now = FXMLLoader.load(getClass().getClassLoader().getResource("Medic.fxml"));
         assertThat(root == now);
+    }
+
+    @Test
+    void testRegistration2(FxRobot robot) throws IOException {
+        robot.clickOn("#LastNameField");
+        robot.write("Pop");
+        robot.clickOn("#FirstNameField");
+        robot.write("George");
+        robot.clickOn("#PhoneField");
+        robot.write("0741258639");
+        robot.clickOn("#AddressField");
+        robot.write("Linistei 21");
+        robot.clickOn("#UsernameField");
+        robot.write("PopGeorge");
+        robot.clickOn("#PasswordField");
+        robot.write("popgeorge");
+        robot.clickOn("#ChoiceBox");
+        robot.clickOn("Medic");
+        robot.clickOn("#Register");
+
+        assertEquals(robot.lookup("#emptyField").queryLabeled().getText(), (String.format("An account with the username PopGeorge already exists!")));
     }
 }
