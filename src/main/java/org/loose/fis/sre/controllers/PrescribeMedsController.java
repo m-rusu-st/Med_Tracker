@@ -44,7 +44,7 @@ public class PrescribeMedsController {
     public void initialize()
     {
         UserService.populateChoiceBox(patientsList);
-        treatmentChoiceBox.getItems().addAll("Da!", "Nu!");
+        treatmentChoiceBox.getItems().addAll("Yes!", "No!");
 
     }
 
@@ -54,10 +54,19 @@ public class PrescribeMedsController {
             UserService.check(patientsList.getValue(), datePicker.getValue());
             UserService.addMedicamentation((String) patientsList.getValue(), addMedicineField.getText(), dosageField.getText(), datePicker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), (String)treatmentChoiceBox.getValue());
 
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Medic.fxml"));
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.show();
+
         }catch(EmptyFieldsDoctorException e){
             wrongField.setText(e.getMessage());
         }catch(NoEmptyField e){
             wrongField.setText(e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }

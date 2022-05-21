@@ -42,7 +42,7 @@ public class ModifyMedsController {
     public void initialize()
     {
         UserService.populateChoiceBox(patientsList);
-        treatmentChoiceBox.getItems().addAll("Da!", "Nu!");
+        treatmentChoiceBox.getItems().addAll("Yes!", "No!");
 
     }
 
@@ -52,10 +52,20 @@ public class ModifyMedsController {
             UserService.check(patientsList.getValue(), datePicker.getValue());
             Medicamentation medicine = new Medicamentation((String) patientsList.getValue(), meds.getText(), dosageTextField.getText(), datePicker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), (String) treatmentChoiceBox.getValue());
             UserService.deleteMedicamentation(medicine);
+
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Medic.fxml"));
+            stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.show();
+
         }catch(NoEmptyField event){
             wrongField.setText(event.getMessage());
         }catch(NoMedicineException event){
             wrongField.setText(event.getMessage());
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -64,6 +74,14 @@ public class ModifyMedsController {
         try{
             UserService.check(patientsList.getValue(), datePicker.getValue());
             UserService.modifyMedicamentation((String)patientsList.getValue(), meds.getText(), dosageTextField.getText(), datePicker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), (String)treatmentChoiceBox.getValue());
+
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Medic.fxml"));
+            stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.show();
+
         }catch(NoEmptyField event){
             wrongField.setText(event.getMessage());
         }

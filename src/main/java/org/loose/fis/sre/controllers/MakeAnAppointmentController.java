@@ -36,9 +36,7 @@ public class MakeAnAppointmentController {
     @FXML
     private Button Back;
     @FXML
-    private Label emptyField1;
-    @FXML
-    private Label emptyField2;
+    private Label emptyField;
 
     private Stage stage;
     private Parent root;
@@ -54,12 +52,20 @@ public class MakeAnAppointmentController {
         try{
           UserService.check(doctorPicker.getValue(), datePicker.getValue());
           String[]  param = ((String) doctorPicker.getValue()).split(" ");
-          UserService.addAppointment(LastNameField.getText(), FirstNameField.getText(), PhoneField.getText(), UsernameField.getText(), datePicker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")), (String) timePicker.getValue(), param[0]);
+          UserService.addAppointment(LastNameField.getText(), FirstNameField.getText(), PhoneField.getText(), UsernameField.getText(),
+                  datePicker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),  datePicker.getValue().getDayOfWeek(), (String) timePicker.getValue(), param[0]);
+
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("Pacient.fxml"));
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.show();
 
        }catch(NoEmptyField e){
-            emptyField1.setText(e.getMessage());
+            emptyField.setText(e.getMessage());
         }catch (AppointmentError e){
-            emptyField2.setText(e.getMessage());
+            emptyField.setText(e.getMessage());
         }
     }
 

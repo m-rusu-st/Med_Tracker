@@ -1,6 +1,7 @@
 package org.loose.fis.sre.model;
 
 import org.dizitart.no2.objects.Id;
+import org.loose.fis.sre.services.UserService;
 
 public class Appointment {
 
@@ -16,7 +17,7 @@ public class Appointment {
     private String doctor;
     private String valid;
 
-    public static int contor = 0;
+    public static int contor;
     public Appointment(String username, String LastName, String FirstName, String phone, String date, String time, String doctor, String valid) {
         this.username = username;
         this.LastName = LastName;
@@ -27,11 +28,19 @@ public class Appointment {
         this.doctor = doctor;
         this.valid = valid;
 
-        contor = contor + 1;
-        codUnic = username + String.valueOf(contor);
+        contor = UserService.nrElementsApp() + 1;
+        codUnic = String.valueOf(contor);
     }
 
     public Appointment() {
+    }
+
+    public String getCodUnic() {
+        return codUnic;
+    }
+
+    public void setCodUnic(String codUnic) {
+        this.codUnic = codUnic;
     }
 
     public String getUsername() {
@@ -46,16 +55,16 @@ public class Appointment {
         return LastName;
     }
 
-    public void setLastName(String LastName) {
-        this.LastName = LastName;
+    public void setLastName(String lastName) {
+        LastName = lastName;
     }
 
     public String getFirstName() {
         return FirstName;
     }
 
-    public void setFirstName(String FirstName) {
-        this.FirstName = FirstName;
+    public void setFirstName(String firstName) {
+        FirstName = firstName;
     }
 
     public String getPhone() {
@@ -78,16 +87,8 @@ public class Appointment {
         return time;
     }
 
-    public void setTime(String phone) {
+    public void setTime(String time) {
         this.time = time;
-    }
-
-    public String getValid() {
-        return valid;
-    }
-
-    public void setValid(String valid) {
-        this.valid = valid;
     }
 
     public String getDoctor() {
@@ -98,4 +99,11 @@ public class Appointment {
         this.doctor = doctor;
     }
 
+    public String getValid() {
+        return valid;
+    }
+
+    public void setValid(String valid) {
+        this.valid = valid;
+    }
 }

@@ -1,16 +1,26 @@
 package org.loose.fis.sre.model;
 
 public class DoctorsHistory {
+    String username;
     String LastName;
     String FirstName;
     String clinic;
     String specialty;
 
-    public DoctorsHistory(String lastName, String firstName, String clinic, String specialty) {
+    public DoctorsHistory(String username, String lastName, String firstName, String clinic, String specialty) {
+        this.username = username;
         LastName = lastName;
         FirstName = firstName;
         this.clinic = clinic;
         this.specialty = specialty;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getLastName() {

@@ -13,10 +13,13 @@ import org.dizitart.no2.objects.ObjectRepository;
 import org.loose.fis.sre.exceptions.*;
 import org.loose.fis.sre.model.*;
 
+import javax.print.Doc;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -273,28 +276,6 @@ public class UserService {
         x.setItems(list);
     }
 
-
-    public static void populateTableView4(TableView x) {
-        ObservableList<PatientsHistory> list = FXCollections.observableArrayList();
-
-        for(Appointment appointment : userRepository3.find()){
-            if(Objects.equals(m,appointment.getDoctor())){
-                String LastName = appointment.getLastName();
-                String FirstName = appointment.getFirstName();
-                String phone = appointment.getPhone();
-                String patient = appointment.getUsername();
-                String meds = "";
-                for(Medicamentation medicamentation : userRepository2.find()){
-                    if(Objects.equals(patient, medicamentation.getUsername())){
-                        meds = meds + medicamentation.getMedicamentation() + " ";
-                    }
-                }
-                list.add(new PatientsHistory(LastName, FirstName, phone, meds));
-            }
-         }
-          x.setItems(list);
-    }
-          
     public static void populateTableView3(TableView x){
         ObservableList<AppointmentDetails> list = FXCollections.observableArrayList();
         for(Appointment appointment : userRepository3.find()) {
@@ -320,6 +301,34 @@ public class UserService {
         x.setItems(list);
     }
 
+    public static void populateTableView4(TableView x) {
+        ObservableList<PatientsHistory> list = FXCollections.observableArrayList();
+
+        for(Appointment appointment : userRepository3.find()){
+            if(Objects.equals(m,appointment.getDoctor())){
+                String LastName = appointment.getLastName();
+                String FirstName = appointment.getFirstName();
+                String phone = appointment.getPhone();
+                String patientsUsername = appointment.getUsername();
+                String meds = "";
+                for(Medicamentation medicamentation : userRepository2.find()){
+                    if(Objects.equals(patientsUsername, medicamentation.getUsername())){
+                        meds = meds + medicamentation.getMedicamentation() + " " + medicamentation.getDosage() + " ";
+                    }
+                }
+                PatientsHistory patient = new PatientsHistory(patientsUsername, LastName, FirstName, phone, meds);
+                int ok = 0;
+                for(PatientsHistory pat : list)
+                    if(Objects.equals((pat.getUsername()), patientsUsername)){
+                        ok = 1;
+                        break;
+                    }
+                if(ok == 0) list.add(patient);
+            }
+         }
+          x.setItems(list);
+    }
+
     public static void populateTableView5(TableView x) {
         ObservableList<DoctorsHistory> list = FXCollections.observableArrayList();
 
@@ -336,9 +345,14 @@ public class UserService {
                         specialty = user.getSpecialty();
                     }
                 }
-                DoctorsHistory doctor = new DoctorsHistory(LastName, FirstName, clinic, specialty);
-                if(!list.contains(doctor))
-                    list.add(new DoctorsHistory(LastName, FirstName, clinic, specialty));
+                DoctorsHistory doctor = new DoctorsHistory(doctorUsername, LastName, FirstName, clinic, specialty);
+                int ok = 0;
+                for(DoctorsHistory doc : list)
+                    if(Objects.equals((doc.getUsername()), doctorUsername)){
+                        ok = 1;
+                        break;
+                    }
+                if(ok == 0) list.add(doctor);
             }
         }
         x.setItems(list);
@@ -362,7 +376,7 @@ public class UserService {
     }
 
     public static int check(String cb1, LocalDate cb2) throws NoEmptyField{
-        if(Objects.equals(cb1, "") ||  (cb2 == null)) throw new NoEmptyField();
+        if(cb1 == null || cb2 == null) throw new NoEmptyField();
 
         return 0;
     }
@@ -373,10 +387,10 @@ public class UserService {
         return 0;
     }
 
-    public static int addAppointment(String LastName, String FirstName, String phone, String username, String date, String time, String doctor) throws NoEmptyField, AppointmentError {
+    public static int addAppointment(String LastName, String FirstName, String phone, String username, String date, DayOfWeek day, String time, String doctor) throws NoEmptyField, AppointmentError {
 
         if(LastName.equals("") || FirstName.equals("") || phone.equals("") || username.equals("") || date.equals("") || time.equals("") || doctor.equals(""))throw new NoEmptyField();
-        else if(!LastName.equals("") && !FirstName.equals("") && !phone.equals("") && !username.equals("") && !date.equals("") && !time.equals("") && !doctor.equals("") && (time.compareTo("08:00")<0 || time.compareTo("17:00")>0)) throw new AppointmentError();
+        else if(time.compareTo("08:00")<0 || time.compareTo("17:00")>0 || day.compareTo(DayOfWeek.FRIDAY)>0 || date.compareTo(LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))<0) throw new AppointmentError();
         else
         userRepository3.insert(new Appointment(username, LastName, FirstName, phone, date, time, doctor, ""));
         return 0;
@@ -388,21 +402,46 @@ public class UserService {
         ObservableList<String> list = FXCollections.observableArrayList();
         for (Appointment appointment : userRepository3.find()) {
             if(appointment.getDoctor().equals(m))
-            list.add(appointment.getUsername() + " " + appointment.getLastName() + " " + appointment.getFirstName() + " " + appointment.getDate() + " " + appointment.getTime() + " " + appointment.getPhone() + " " + appointment.getValid());
+            list.add(appointment.getLastName() + " " + appointment.getFirstName() + " " + appointment.getDate() + " " + appointment.getTime() + " " + appointment.getPhone() + " " + appointment.getValid());
         }
 
         x.setItems(list);
     }
 
-    public static void setAppointmentValidation(String username, String valid)
+    public static void setAppointmentValidation(String lastName, String firstName, String date, String time, String valid)
     {
         for(Appointment appointment : userRepository3.find())
         {
-            if(Objects.equals(username, appointment.getUsername()))
+            if(Objects.equals(lastName, appointment.getLastName()) && Objects.equals(firstName, appointment.getFirstName()) &&
+                    Objects.equals(date, appointment.getDate()) && Objects.equals(time, appointment.getTime()))
             {
                 appointment.setValid(valid);
                 userRepository3.update(appointment);
             }
         }
     }
+
+    public static int nrElementsApp()
+    {
+        int nr = 0;
+        for(Appointment appointment : userRepository3.find())
+        {
+            nr = nr + 1;
+        }
+
+        return nr;
+    }
+
+    public static int nrElementsMeds()
+    {
+        int nr = 0;
+        for(Medicamentation medicamentation : userRepository2.find())
+        {
+            nr = nr + 1;
+        }
+
+        return nr;
+    }
+
+
 }
