@@ -19,10 +19,12 @@ import org.testfx.framework.junit5.Start;
 
 import java.io.IOException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.testfx.assertions.api.Assertions.assertThat;
 
 @ExtendWith(ApplicationExtension.class)
 public class LogInTest {
+    Parent root;
 
     @BeforeEach
     void setUp() throws Exception {
@@ -43,6 +45,15 @@ public class LogInTest {
     }
 
     @Test
+    @DisplayName("Empty username and password field")
+    void testLogInEmptyUsernamePassword(FxRobot robot) throws EmptyUsernamePasswordFieldException,UsernameAlreadyExistsException, NoEmptyField, IOException {
+        UserService.addUser("Matache", "Mircea", "0756754341", "Soarelui", "MatacheMircea", "matachemircea", "medic", "dermatologie", "dermaClinic");
+        robot.clickOn("#logInButton");
+
+        assertEquals(robot.lookup("#wrongLogIn").queryLabeled().getText(),"Please enter your data!");
+    }
+
+    @Test
     @DisplayName("Empty username field")
     void testLogInEmptyUsername(FxRobot robot) throws EmptyUsernameFieldException,UsernameAlreadyExistsException, NoEmptyField, IOException {
         UserService.addUser("Matache", "Mircea", "0756754341", "Soarelui", "MatacheMircea", "matachemircea", "medic", "dermatologie", "dermaClinic");
@@ -52,8 +63,9 @@ public class LogInTest {
         robot.clickOn("#enterPasswordField");
         robot.write("matachemircea");
         robot.clickOn("#logInButton");
-        //assertThat(robot.lookup("#wrongLogIn").queryText()).hasText("Please enter your username!");
-    }
+
+        assertEquals(robot.lookup("#wrongLogIn").queryLabeled().getText(),"Please enter your username!");
+     }
 
     @Test
     @DisplayName("Empty password field")
@@ -65,7 +77,7 @@ public class LogInTest {
         robot.clickOn("#enterPasswordField");
         robot.write("");
         robot.clickOn("#logInButton");
-       // assertThat(robot.lookup("#wrongLogIn").queryText()).hasText("Please enter your password!");
+        assertEquals(robot.lookup("#wrongLogIn").queryLabeled().getText(),"Please enter your password!");
     }
 
     @Test
@@ -78,7 +90,7 @@ public class LogInTest {
         robot.clickOn("#enterPasswordField");
         robot.write("parola");
         robot.clickOn("#logInButton");
-       // assertThat(robot.lookup("#wrongLogIn").queryText()).hasText("Wrong password! Try again!");
+        assertEquals(robot.lookup("#wrongLogIn").queryLabeled().getText(),"Wrong password! Try again!");
     }
 
     @Test
@@ -91,14 +103,12 @@ public class LogInTest {
         robot.clickOn("#enterPasswordField");
         robot.write("matachemircea");
         robot.clickOn("#logInButton");
-      /*  assertThat(robot.lookup("#wrongLogIn").queryText()).hasText(
-                String.format("An account with the username %s does not exists!" + "\n" + "Try again!", "Matachemircea")
-        );*/
+        assertEquals(robot.lookup("#wrongLogIn").queryLabeled().getText(),String.format("An account with the username %s does not exists!" + "\n" + "Try again!", "Matachemircea"));
     }
 
     @Test
-    @DisplayName("User logged in successfully")
-    void testLogin(FxRobot robot) throws UsernameAlreadyExistsException, NoEmptyField, IOException {
+    @DisplayName("User logged in as doctor successfully")
+    void testLoginDoctor(FxRobot robot) throws UsernameAlreadyExistsException, NoEmptyField, IOException {
         UserService.addUser("Matache", "Mircea", "0756754341", "Soarelui", "MatacheMircea", "matachemircea", "Medic", "dermatologie", "dermaClinic");
 
         robot.clickOn("#usernameTextField");
@@ -106,12 +116,32 @@ public class LogInTest {
         robot.clickOn("#enterPasswordField");
         robot.write("matachemircea");
         robot.clickOn("#logInButton");
+
+        Parent now = FXMLLoader.load(getClass().getClassLoader().getResource("Medic.fxml"));
+        assertThat(root == now);
+    }
+
+    @Test
+    @DisplayName("User logged in as patient successfully")
+    void testLoginPatient(FxRobot robot) throws UsernameAlreadyExistsException, NoEmptyField, IOException {
+        UserService.addUser("Matache", "Mircea", "0756754341", "Soarelui", "MatacheMircea", "matachemircea", "Pacient", "dermatologie", "dermaClinic");
+
+        robot.clickOn("#usernameTextField");
+        robot.write("MatacheMircea");
+        robot.clickOn("#enterPasswordField");
+        robot.write("matachemircea");
+        robot.clickOn("#logInButton");
+
+        Parent now = FXMLLoader.load(getClass().getClassLoader().getResource("Medic.fxml"));
+        assertThat(root == now);
     }
 
     @Test
     @DisplayName("User goes to register page")
-    void testregister (FxRobot robot) {
+    void testregister (FxRobot robot) throws IOException {
         robot.clickOn("#createNewAccountButton");
+        Parent now = FXMLLoader.load(getClass().getClassLoader().getResource("register.fxml"));
+        assertThat(root == now);
     }
 
 }
