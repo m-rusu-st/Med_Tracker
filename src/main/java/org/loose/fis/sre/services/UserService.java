@@ -112,7 +112,7 @@ public class UserService {
             for (Medicamentation medicamentation : userRepository2.find()) {
 
                 if (Objects.equals(meds.getMedicamentation(), medicamentation.getMedicamentation()) && Objects.equals(meds.getUsername(), medicamentation.getUsername())){
-                    userRepository2.remove(meds);
+                    userRepository2.remove(medicamentation);
                     ok = ok + 1;
                 }
             }
