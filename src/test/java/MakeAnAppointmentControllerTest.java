@@ -39,7 +39,7 @@ public class MakeAnAppointmentControllerTest {
     void start(Stage primaryStage) throws Exception {
         root = FXMLLoader.load(getClass().getClassLoader().getResource("Pacient.fxml"));
         primaryStage.setTitle("Med Tracker");
-        primaryStage.setScene(new Scene(root, 600, 500));
+        primaryStage.setScene(new Scene(root, 498, 698));
         primaryStage.show();
     }
 

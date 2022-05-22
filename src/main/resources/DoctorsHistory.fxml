@@ -33,7 +33,7 @@
                 <TableView fx:id="tableView" layoutY="1.0" prefHeight="556.0" prefWidth="500.0">
                     <columns>
                         <TableColumn fx:id="LastNameTableColumn" prefWidth="122.0" text="Last Name" />
-                        <TableColumn fx:id="FirstNameTableColumn" minWidth="2.0" prefWidth="119.0" text="FirstName" />
+                        <TableColumn fx:id="FirstNameTableColumn" minWidth="2.0" prefWidth="119.0" text="First Name" />
                         <TableColumn fx:id="ClinicTableColumn" prefWidth="137.0" text="Clinic/Hospital" />
                         <TableColumn fx:id="SpecialtyColumn" prefWidth="141.0" text="Specialty" />
                     </columns>
