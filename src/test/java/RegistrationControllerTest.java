@@ -87,7 +87,7 @@ class RegistrationControllerTest {
 
         Parent now = FXMLLoader.load(getClass().getClassLoader().getResource("ChooseSpecialty.fxml"));
         assertThat(root == now);
-        root = now;
+
 
         robot.clickOn("#SpecialtyField");
         robot.write(SPECIALTY);
