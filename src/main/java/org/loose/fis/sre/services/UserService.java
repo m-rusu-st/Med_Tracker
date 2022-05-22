@@ -1,5 +1,6 @@
 package org.loose.fis.sre.services;
 
+import com.sun.javafx.scene.control.behavior.ChoiceBoxBehavior;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -111,7 +112,7 @@ public class UserService {
             for (Medicamentation medicamentation : userRepository2.find()) {
 
                 if (Objects.equals(meds.getMedicamentation(), medicamentation.getMedicamentation()) && Objects.equals(meds.getUsername(), medicamentation.getUsername())){
-                    userRepository2.remove(meds);
+                    userRepository2.remove(medicamentation);
                     ok = ok + 1;
                 }
             }
